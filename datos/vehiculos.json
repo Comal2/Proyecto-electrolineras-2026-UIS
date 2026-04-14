@@ -1,0 +1,13 @@
+{
+  "vehiculos": [
+    {
+      "id": "V1",
+      "modelo": "Nombre del vehículo",
+      "gama": "alta",
+      "bateria_kwh": 0,
+      "autonomia_km": 0,
+      "consumo_kwh_por_km": 0
+    }
+  ]
+}
+
