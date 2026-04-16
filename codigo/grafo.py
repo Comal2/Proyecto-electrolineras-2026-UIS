@@ -1,155 +1,130 @@
-"""
-grafo.py - Cargar mapa de Bucaramanga
-Descarga el mapa desde OpenStreetMap, lo convierte 
-en grafo y lo guarda localmente.
-"""
-
 import osmnx as ox
 import networkx as nx
 import matplotlib.pyplot as plt
 import os
-import time
-
 
 # ── Configuración ──────────────────────────────────
 GRAPHML_PATH = os.path.join("datos", "area_metropolitana.graphml")
-IMAGEN_PATH  = os.path.join("resultados", "mapa_area_metropolitana.png")
+IMAGEN_PATH  = os.path.join("resultados", "mapa_con_nodos.png")
 
-# Bounding box del área metropolitana
-# Cubre: Bucaramanga, Floridablanca, Girón, Piedecuesta
-BBOX = {
-    "north": 7.2045,
-    "south": 6.9682,
-    "west":  -73.2170,
-    "east":  -73.0357
-}
+# Tus puntos de carga (Electrolineras)
+ELECTROLINERAS = [
+    ("E1 Homecenter", 7.1166407, -73.1201270),
+    ("E2 Quinta Etapa", 7.1154206, -73.1076613),
+    ("E3 Cacique", 7.0992906, -73.1071340),
+    ("E4 Canaveral", 7.0708246, -73.1062650),
+    ("E5 Terpel Piedecuesta", 6.9980135, -73.0521321),
+    ("E6 Éxito La Rosita", 7.1133560, -73.1231384),
+    ("E7 La Florida", 7.0696035, -73.1052876),
+    ("E8 Oriente", 7.0853656, -73.1646908)
+]
+
+# Tus Puntos de Interés (Universidades y otros)
+PUNTOS_CLAVE = [
+    ("P1 UIS Central", 7.1388520, -73.1202742),
+    ("P2 UIS Florida", 7.0616660, -73.0885503),
+    ("P3 UIS Guatiguará", 6.9946863, -73.0666782),
+    ("P4 UIS Bucarica", 7.1197422, -73.1230935),
+    ("P5 Cenfer", 7.0825632, -73.1540915),
+    ("P6 UNAB", 7.1170079, -73.1045411),
+    ("P7 UTS", 7.1051693, -73.1238175),
+    ("P8 UPB", 7.0385418, -73.0721803),
+    ("P9 PTAR", 7.0656181, -73.1280572),
+    ("P10 Hacienda Catay", 6.9760605, -73.0415568)
+]
 
 # ── Funciones ──────────────────────────────────────
 
-def descargar_mapa():
-    """Descarga el mapa del área metropolitana desde OpenStreetMap."""
-
-    print("Descargando area metropolitana de Bucaramanga...")
-    print("Cubre: Bucaramanga, Floridablanca, Giron, Piedecuesta")
-    print("(Requiere internet, puede tardar 2-5 minutos)\n")
-
-    # Intento 1: por bounding box (más preciso para áreas grandes)
+def descargar_mapa_metropolitano():
+    """Descarga el área metropolitana de forma robusta."""
+    ox.settings.use_cache = True
+    ox.settings.timeout = 1000  # Tiempo amplio para evitar desconexiones
+    
+    print("🚗 Descargando mapa METROPOLITANO...")
+    
+    # Método infalible: Pasar la lista directamente a OSMnx
+    lugares = [
+        "Bucaramanga, Santander, Colombia",
+        "Floridablanca, Santander, Colombia", 
+        "Girón, Santander, Colombia",
+        "Piedecuesta, Santander, Colombia"
+    ]
+    
     try:
-        print("Metodo 1: por bounding box...")
-        inicio = time.time()
-        G = ox.graph_from_bbox(
-            bbox=(BBOX["north"], BBOX["south"], 
-                  BBOX["east"],  BBOX["west"]),
-            network_type="drive"
-        )
-        print(f"Listo en {time.time() - inicio:.1f}s")
+        # Al pasar una lista, OSMnx une los polígonos automáticamente
+        G = ox.graph_from_place(lugares, network_type="drive", simplify=True)
+        print(f"✅ ÉXITO: {G.number_of_nodes():,} nodos descargados.")
         return G
     except Exception as e:
-        print(f"Fallo: {e}")
+        print(f"⚠️ Falló la descarga por lugares: {e}")
+        print("🔄 Intentando método de Bounding Box como respaldo...")
+        
+        # Respaldo: BBox amplia (N, S, E, W) adaptada a versiones recientes de OSMnx
+        try:
+            # Nota: Si usas OSMnx v2.0+, la sintaxis correcta es bbox=(n, s, e, w)
+            # Cubre desde el norte de BGA hasta el sur de Piedecuesta
+            G = ox.graph_from_bbox(bbox=(7.150, 6.950, -73.000, -73.200), network_type="drive", simplify=True)
+            print(f"✅ ÉXITO (BBox): {G.number_of_nodes():,} nodos descargados.")
+            return G
+        except Exception as ex:
+            print(f"❌ Falló también el respaldo: {ex}")
+            return None
 
-    # Intento 2: por nombre de cada municipio
-    try:
-        print("Metodo 2: por nombre del area...")
-        inicio = time.time()
-        G = ox.graph_from_place(
-            ["Bucaramanga, Santander, Colombia",
-             "Floridablanca, Santander, Colombia",
-             "Giron, Santander, Colombia",
-             "Piedecuesta, Santander, Colombia"],
-            network_type="drive"
-        )
-        print(f"Listo en {time.time() - inicio:.1f}s")
-        return G
-    except Exception as e:
-        print(f"Fallo: {e}")
-
-    print("No se pudo descargar el mapa.")
-    return None
-
-def cargar_mapa():
-    """
-    Carga el mapa: si ya existe el archivo local lo usa,
-    si no lo descarga y lo guarda.
-    """
-
+def cargar_o_descargar():
+    os.makedirs("datos", exist_ok=True)
     if os.path.exists(GRAPHML_PATH):
-        print(f"Cargando mapa desde archivo local: {GRAPHML_PATH}")
-        G = ox.load_graphml(GRAPHML_PATH)
-        print(f"Cargado: {G.number_of_nodes():,} nodos, {G.number_of_edges():,} aristas")
-        return G
-    else:
-        G = descargar_mapa()
-        if G is not None:
-            os.makedirs("datos", exist_ok=True)
-            ox.save_graphml(G, filepath=GRAPHML_PATH)
-            print(f"Mapa guardado en: {GRAPHML_PATH}")
-            print("La proxima vez carga sin internet.")
-        return G
+        print(f"📂 Cargando mapa local desde: {GRAPHML_PATH}")
+        return ox.load_graphml(GRAPHML_PATH)
+    
+    G = descargar_mapa_metropolitano()
+    if G is not None:
+        ox.save_graphml(G, filepath=GRAPHML_PATH)
+        print(f"💾 Mapa guardado en: {GRAPHML_PATH}")
+    return G
 
-
-def mostrar_info(G):
-    """Muestra estadísticas básicas del grafo."""
-
-    print("\n── Informacion del grafo ──────────────────")
-    print(f"Nodos (intersecciones): {G.number_of_nodes():,}")
-    print(f"Aristas (calles):       {G.number_of_edges():,}")
-
-    if nx.is_strongly_connected(G):
-        print("Conectividad: Fuertemente conexo")
-    else:
-        comps = list(nx.strongly_connected_components(G))
-        mayor = max(comps, key=len)
-        print(f"Componentes: {len(comps)} | Mayor: {len(mayor):,} nodos")
-
-    nodos = list(G.nodes(data=True))
-    lats = [d['y'] for _, d in nodos]
-    lons = [d['x'] for _, d in nodos]
-    print(f"Latitud:  {min(lats):.4f} a {max(lats):.4f}")
-    print(f"Longitud: {min(lons):.4f} a {max(lons):.4f}")
-    print("───────────────────────────────────────────")
-
-
-def guardar_imagen(G):
-    """Genera y guarda una imagen PNG del mapa."""
-
-    print("\nGenerando imagen del mapa...")
+def visualizar_con_nodos(G):
+    """Genera la imagen del mapa con tus puntos superpuestos."""
+    print("\n🖼️ Generando imagen con nodos...")
     os.makedirs("resultados", exist_ok=True)
-
+    
+    # Dibujar el grafo base
     fig, ax = ox.plot_graph(
-        G,
-        figsize=(12, 12),
-        node_size=0,
-        edge_linewidth=0.5,
-        edge_color="#2196F3",
-        bgcolor="white",
-        show=False,
-        close=False
+        G, figsize=(16, 16), node_size=0, 
+        edge_linewidth=0.5, edge_color="#999999",
+        bgcolor="white", show=False, close=False
     )
+    
+    # Extraer coordenadas para graficar
+    lats_e = [lat for _, lat, _ in ELECTROLINERAS]
+    lons_e = [lon for _, _, lon in ELECTROLINERAS]
+    
+    lats_p = [lat for _, lat, _ in PUNTOS_CLAVE]
+    lons_p = [lon for _, _, lon in PUNTOS_CLAVE]
 
-    ax.set_title(
-        "Mapa Vial de Bucaramanga - OpenStreetMap",
-        fontsize=16, fontweight='bold'
-    )
+    # Graficar Electrolineras (Rojo)
+    ax.scatter(lons_e, lats_e, c='red', s=100, zorder=5, label='Electrolineras', edgecolors='black')
+    
+    # Graficar Puntos Clave (Azul)
+    ax.scatter(lons_p, lats_p, c='blue', s=80, zorder=5, marker='s', label='Puntos Clave (UIS, etc)', edgecolors='black')
 
+    ax.set_title("🗺️ Mapa Vial con Nodos de Carga - Área Metropolitana", fontsize=20, fontweight='bold', pad=20)
+    ax.legend(fontsize=12, loc='upper left')
+    
     plt.tight_layout()
-    plt.savefig(IMAGEN_PATH, dpi=150, bbox_inches='tight', facecolor='white')
+    plt.savefig(IMAGEN_PATH, dpi=300, bbox_inches='tight', facecolor='white')
     plt.close()
-    print(f"Imagen guardada: {IMAGEN_PATH}")
+    print(f"✅ Imagen generada exitosamente en: {IMAGEN_PATH}")
 
-
-# ── Ejecución ──────────────────────────────────────
-
+# ── EJECUCIÓN ──────────────────────────────────────
 if __name__ == "__main__":
-
-    print("=" * 45)
-    print("  GRAFO.PY - Mapa de Bucaramanga")
-    print("=" * 45 + "\n")
-
-    G = cargar_mapa()
-
-    if G is None:
-        print("Error: no se pudo cargar el mapa.")
+    print("=" * 50)
+    print("🚗 INICIANDO PROCESAMIENTO DE MAPA")
+    print("=" * 50)
+    
+    G = cargar_o_descargar()
+    
+    if G is not None:
+        visualizar_con_nodos(G)
+        print("\n🎉 ¡GRAFO LISTO! Ahora puedes extraer o manipular los nodos más cercanos a tus puntos.")
     else:
-        mostrar_info(G)
-        guardar_imagen(G)
-        print("\nGrafo listo para usar en el proyecto.")
+        print("❌ No se pudo obtener el grafo.")
