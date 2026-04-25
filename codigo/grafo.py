@@ -37,7 +37,7 @@ PUNTOS_CLAVE = [
 
 def descargar_mapa_metropolitano():
     """Descarga el área metropolitana de forma robusta."""
-    ox.settings.use_cache = True
+    ox.settings.use_cache = False
     ox.settings.timeout = 1000  # Tiempo amplio para evitar desconexiones
     
     print("🚗 Descargando mapa METROPOLITANO...")
