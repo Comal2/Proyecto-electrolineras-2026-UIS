@@ -1,0 +1,21 @@
+{
+  "vehiculos": [
+    {
+      "id": "V1",
+      "modelo": "BMW i4 eDrive40",
+      "gama": "alta",
+      "bateria_kwh": 81.3,
+      "autonomia_km": 525,
+      "Eficiencia/consumo_Wh_por_km": 155
+    },
+
+    {
+        "id": "V2",
+      "modelo": "Nissan LEAF Standard Range 52 kWh",
+      "gama": "baja",
+      "bateria_kwh": 52.9,
+      "autonomia_km": 330,
+      "Eficiencia/consumo_Wh_por_km": 160
+    }
+  ]
+}
