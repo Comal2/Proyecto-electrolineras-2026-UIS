@@ -1,0 +1,1 @@
+1. El archivo `datos\vehiculos.json` es **SOLO** una base, no refleja el *resultado final*  
