@@ -15,7 +15,7 @@ Nuestro objetivo final es utilizar los datos generados por la simulación para *
 > [!IMPORTANT]  
 > 📅 **¡ATENCIÓN EQUIPO Y REVISORES!** 📅  
 > Toda la planificación, roles, fechas clave y las reuniones semanales están detalladas en nuestro documento de seguimiento.  
-> 👉 **[CLIC AQUÍ PARA VER EL CRONOGRAMA DE ENTREGAS](main/CRONOGRAMAS_%26%26_INSTRUCCIONES/CRONOGRAMA.md)** 👈
+> 👉 **[CLIC AQUÍ PARA VER EL CRONOGRAMA DE ENTREGAS](CRONOGRAMAS_&&_INSTRUCCIONES/CRONOGRAMA.md)** 👈
 
 ---
 
