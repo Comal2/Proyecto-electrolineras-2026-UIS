@@ -1,130 +1,178 @@
 import osmnx as ox
-import networkx as nx
-import matplotlib.pyplot as plt
+import pandas as pd
 import os
 
-# ── Configuración ──────────────────────────────────
-GRAPHML_PATH = os.path.join("datos", "area_metropolitana.graphml")
-IMAGEN_PATH  = os.path.join("resultados", "mapa_con_nodos.png")
+# ==============================================================
+# CONFIGURACIÓN DE RUTAS (Se calculan automáticamente)
+# ==============================================================
 
-# Tus puntos de carga (Electrolineras)
-ELECTROLINERAS = [
-    ("E1 Homecenter", 7.1166407, -73.1201270),
-    ("E2 Quinta Etapa", 7.1154206, -73.1076613),
-    ("E3 Cacique", 7.0992906, -73.1071340),
-    ("E4 Canaveral", 7.0708246, -73.1062650),
-    ("E5 Terpel Piedecuesta", 6.9980135, -73.0521321),
-    ("E6 Éxito La Rosita", 7.1133560, -73.1231384),
-    ("E7 La Florida", 7.0696035, -73.1052876),
-    ("E8 Oriente", 7.0853656, -73.1646908)
-]
+# Obtiene la carpeta donde está guardado ESTE archivo (grafo.py)
+DIRECTORIO_SCRIPT = os.path.dirname(os.path.abspath(__file__))
 
-# Tus Puntos de Interés (Universidades y otros)
-PUNTOS_CLAVE = [
-    ("P1 UIS Central", 7.1388520, -73.1202742),
-    ("P2 UIS Florida", 7.0616660, -73.0885503),
-    ("P3 UIS Guatiguará", 6.9946863, -73.0666782),
-    ("P4 UIS Bucarica", 7.1197422, -73.1230935),
-    ("P5 Cenfer", 7.0825632, -73.1540915),
-    ("P6 UNAB", 7.1170079, -73.1045411),
-    ("P7 UTS", 7.1051693, -73.1238175),
-    ("P8 UPB", 7.0385418, -73.0721803),
-    ("P9 PTAR", 7.0656181, -73.1280572),
-    ("P10 Hacienda Catay", 6.9760605, -73.0415568)
-]
+# Sube un nivel para llegar a la raíz del proyecto
+DIRECTORIO_PROYECTO = os.path.dirname(DIRECTORIO_SCRIPT)
 
-# ── Funciones ──────────────────────────────────────
+# Construye las rutas absolutas a cada archivo
+RUTA_GRAPHML        = os.path.join(DIRECTORIO_PROYECTO, "datos", "area_metropolitana.graphml")
+RUTA_ELECTROLINERAS = os.path.join(DIRECTORIO_PROYECTO, "datos", "electrolineras.csv")
+RUTA_ESTADISTICAS   = os.path.join(DIRECTORIO_PROYECTO, "datos", "estadisticas.xlsx")
+RUTA_PUNTOS         = os.path.join(DIRECTORIO_PROYECTO, "datos", "puntos_referencia.csv")
 
-def descargar_mapa_metropolitano():
-    """Descarga el área metropolitana de forma robusta."""
-    ox.settings.use_cache = False
-    ox.settings.timeout = 1000  # Tiempo amplio para evitar desconexiones
+# ==============================================================
+
+
+def cargar_grafo(ruta_archivo):
+    """Carga el grafo desde el archivo .graphml y muestra sus estadísticas."""
+    try:
+        print(f"📂 Buscando grafo en:\n   {ruta_archivo}\n")
+        print("⏳ Cargando el mapa, esto puede tomar unos segundos...")
+        
+        G = ox.load_graphml(ruta_archivo)
+        
+        nodos  = len(G.nodes)
+        calles = len(G.edges)
+        
+        print(f"✅ Mapa cargado con éxito.")
+        print(f"   📍 Nodos (Intersecciones): {nodos}")
+        print(f"   🛣️  Calles (Tramos)       : {calles}")
+        return G
     
-    print("🚗 Descargando mapa METROPOLITANO...")
-    
-    # Método infalible: Pasar la lista directamente a OSMnx
-    lugares = [
-        "Bucaramanga, Santander, Colombia",
-        "Floridablanca, Santander, Colombia", 
-        "Girón, Santander, Colombia",
-        "Piedecuesta, Santander, Colombia"
-    ]
+    except FileNotFoundError:
+        print(f"❌ Archivo no encontrado: {ruta_archivo}")
+        print("   Verifica que el archivo .graphml esté en la carpeta 'datos'.")
+        return None
+    except Exception as e:
+        print(f"❌ Error al cargar el grafo: {e}")
+        return None
+
+
+def encontrar_nodo_cercano(grafo, latitud, longitud):
+    """Encuentra el nodo más cercano en el grafo a partir de coordenadas GPS."""
+    # OJO: osmnx usa X=longitud, Y=latitud (orden invertido al convencional)
+    nodo = ox.distance.nearest_nodes(grafo, X=longitud, Y=latitud)
+    return nodo
+
+
+def procesar_electrolineras(G, ruta_csv):
+    """Lee el CSV de electrolineras y asigna el nodo del grafo a cada una."""
+    print(f"\n{'='*50}")
+    print("⚡ Procesando Electrolineras...")
+    print(f"   Archivo: {ruta_csv}")
+    print(f"{'='*50}")
     
     try:
-        # Al pasar una lista, OSMnx une los polígonos automáticamente
-        G = ox.graph_from_place(lugares, network_type="drive", simplify=True)
-        print(f"✅ ÉXITO: {G.number_of_nodes():,} nodos descargados.")
-        return G
-    except Exception as e:
-        print(f"⚠️ Falló la descarga por lugares: {e}")
-        print("🔄 Intentando método de Bounding Box como respaldo...")
+        df = pd.read_csv(ruta_csv)
+        print(f"   Registros encontrados: {len(df)}")
         
-        # Respaldo: BBox amplia (N, S, E, W) adaptada a versiones recientes de OSMnx
-        try:
-            # Nota: Si usas OSMnx v2.0+, la sintaxis correcta es bbox=(n, s, e, w)
-            # Cubre desde el norte de BGA hasta el sur de Piedecuesta
-            G = ox.graph_from_bbox(bbox=(7.150, 6.950, -73.000, -73.200), network_type="drive", simplify=True)
-            print(f"✅ ÉXITO (BBox): {G.number_of_nodes():,} nodos descargados.")
-            return G
-        except Exception as ex:
-            print(f"❌ Falló también el respaldo: {ex}")
-            return None
+        # Busca el nodo más cercano para cada fila
+        df['nodo_mapa'] = df.apply(
+            lambda fila: encontrar_nodo_cercano(G, fila['latitud'], fila['longitud']),
+            axis=1
+        )
+        
+        print("\n📋 Resultado:")
+        print(df[['nombre', 'latitud', 'longitud', 'nodo_mapa']].to_string(index=False))
+        return df
+    
+    except FileNotFoundError:
+        print(f"❌ Archivo no encontrado: {ruta_csv}")
+        return None
+    except KeyError as e:
+        print(f"❌ Columna faltante en el CSV: {e}")
+        print("   El CSV debe tener columnas: 'nombre', 'latitud', 'longitud'")
+        return None
 
-def cargar_o_descargar():
-    os.makedirs("datos", exist_ok=True)
-    if os.path.exists(GRAPHML_PATH):
-        print(f"📂 Cargando mapa local desde: {GRAPHML_PATH}")
-        return ox.load_graphml(GRAPHML_PATH)
-    
-    G = descargar_mapa_metropolitano()
-    if G is not None:
-        ox.save_graphml(G, filepath=GRAPHML_PATH)
-        print(f"💾 Mapa guardado en: {GRAPHML_PATH}")
-    return G
 
-def visualizar_con_nodos(G):
-    """Genera la imagen del mapa con tus puntos superpuestos."""
-    print("\n🖼️ Generando imagen con nodos...")
-    os.makedirs("resultados", exist_ok=True)
-    
-    # Dibujar el grafo base
-    fig, ax = ox.plot_graph(
-        G, figsize=(16, 16), node_size=0, 
-        edge_linewidth=0.5, edge_color="#999999",
-        bgcolor="white", show=False, close=False
-    )
-    
-    # Extraer coordenadas para graficar
-    lats_e = [lat for _, lat, _ in ELECTROLINERAS]
-    lons_e = [lon for _, _, lon in ELECTROLINERAS]
-    
-    lats_p = [lat for _, lat, _ in PUNTOS_CLAVE]
-    lons_p = [lon for _, _, lon in PUNTOS_CLAVE]
+def procesar_puntos(G, ruta_csv):
+    """Lee el CSV de puntos de referencia y asigna nodo del grafo a cada uno."""
+    print(f"\n{'='*50}")
+    print("📍 Procesando Puntos de Referencia...")
+    print(f"   Archivo: {ruta_csv}")
+    print(f"{'='*50}")
 
-    # Graficar Electrolineras (Rojo)
-    ax.scatter(lons_e, lats_e, c='red', s=100, zorder=5, label='Electrolineras', edgecolors='black')
-    
-    # Graficar Puntos Clave (Azul)
-    ax.scatter(lons_p, lats_p, c='blue', s=80, zorder=5, marker='s', label='Puntos Clave (UIS, etc)', edgecolors='black')
+    try:
+        df = pd.read_csv(ruta_csv)
+        print(f"   Registros encontrados: {len(df)}")
 
-    ax.set_title("🗺️ Mapa Vial con Nodos de Carga - Área Metropolitana", fontsize=20, fontweight='bold', pad=20)
-    ax.legend(fontsize=12, loc='upper left')
-    
-    plt.tight_layout()
-    plt.savefig(IMAGEN_PATH, dpi=300, bbox_inches='tight', facecolor='white')
-    plt.close()
-    print(f"✅ Imagen generada exitosamente en: {IMAGEN_PATH}")
+        df['nodo_mapa'] = df.apply(
+            lambda fila: encontrar_nodo_cercano(G, fila['latitud'], fila['longitud']),
+            axis=1
+        )
 
-# ── EJECUCIÓN ──────────────────────────────────────
+        print("\n📋 Resultado:")
+        print(df[['nombre', 'latitud', 'longitud', 'nodo_mapa']].to_string(index=False))
+        return df
+
+    except FileNotFoundError:
+        print(f"❌ Archivo no encontrado: {ruta_csv}")
+        return None
+    except KeyError as e:
+        print(f"❌ Columna faltante en el CSV: {e}")
+        return None
+
+
+def procesar_estadisticas(ruta_xlsx):
+    """Lee el archivo Excel de estadísticas y muestra un resumen."""
+    print(f"\n{'='*50}")
+    print("📊 Procesando Estadísticas...")
+    print(f"   Archivo: {ruta_xlsx}")
+    print(f"{'='*50}")
+    
+    try:
+        # Carga todas las hojas del Excel
+        hojas = pd.read_excel(ruta_xlsx, sheet_name=None, engine='openpyxl')
+        
+        print(f"   Hojas encontradas: {list(hojas.keys())}")
+        
+        for nombre_hoja, df_hoja in hojas.items():
+            print(f"\n--- Hoja: '{nombre_hoja}' ({len(df_hoja)} filas x {len(df_hoja.columns)} columnas) ---")
+            print(df_hoja.head(5).to_string(index=False))  # Muestra primeras 5 filas
+        
+        return hojas
+    
+    except FileNotFoundError:
+        print(f"❌ Archivo no encontrado: {ruta_xlsx}")
+        return None
+    except Exception as e:
+        print(f"❌ Error al leer el Excel: {e}")
+        print("   Asegúrate de tener instalado: pip install openpyxl")
+        return None
+
+
+# ==============================================================
+# PROGRAMA PRINCIPAL
+# ==============================================================
+
 if __name__ == "__main__":
-    print("=" * 50)
-    print("🚗 INICIANDO PROCESAMIENTO DE MAPA")
-    print("=" * 50)
     
-    G = cargar_o_descargar()
+    print("=" * 55)
+    print("  SISTEMA DE ELECTROLINERAS - UIS 2026")
+    print("=" * 55)
     
-    if G is not None:
-        visualizar_con_nodos(G)
-        print("\n🎉 ¡GRAFO LISTO! Ahora puedes extraer o manipular los nodos más cercanos a tus puntos.")
+    # 1. Cargar el grafo vial
+    grafo_area = cargar_grafo(RUTA_GRAPHML)
+    
+    if grafo_area is not None:
+        
+        # 2. Procesar electrolineras y mapearlas al grafo
+        df_electro = procesar_electrolineras(grafo_area, RUTA_ELECTROLINERAS)
+        
+        # 3. Procesar puntos de referencia y mapearlos al grafo
+        df_puntos = procesar_puntos(grafo_area, RUTA_PUNTOS)
+        
+        # 4. Procesar el archivo Excel de estadísticas
+        datos_estadisticas = procesar_estadisticas(RUTA_ESTADISTICAS)
+        
+        # 5. Guardar resultados
+        if df_electro is not None:
+            ruta_salida_electro = os.path.join(DIRECTORIO_PROYECTO, "datos", "electrolineras_con_nodos.csv")
+            df_electro.to_csv(ruta_salida_electro, index=False)
+            print(f"\n💾 Resultado guardado en:\n   {ruta_salida_electro}")
+            
+        if df_puntos is not None:
+            ruta_salida_puntos = os.path.join(DIRECTORIO_PROYECTO, "datos", "puntos_con_nodos.csv")
+            df_puntos.to_csv(ruta_salida_puntos, index=False)
+            print(f"\n💾 Resultado guardado en:\n   {ruta_salida_puntos}")
+    
     else:
-        print("❌ No se pudo obtener el grafo.")
+        print("\n⚠️  No se puede continuar sin el grafo vial.")
