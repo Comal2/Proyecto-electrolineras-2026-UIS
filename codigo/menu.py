@@ -1,12 +1,14 @@
-#grafo.py
+# grafo.py
 #simulacion.py
 #modelo_ml.py
+#estadisticas
 
 #//// Importamos otros programas a utilizar
 
-#import grafos
-#import simulacion          # <- import programs 
-#import modelo
+import grafo
+import simulacion         # <- import programs 
+import modelo_ml
+#import estadisticas
 
 """El submenu dentro de la op. 1"""
 
@@ -22,13 +24,13 @@ def submenu_mapa_grafos_simulacion():                  # <- definimos la fun que
         match(sub_opcion):
             case 1:
                 print("\nMostrando mapa y grafo")
-            #grafo.main()                           # <- llamamos el programa que importamos
+                grafo.main()                           # <- llamamos el programa que importamos
             case 2:
                 print("\nSimulando recorrido...")
-            #simulacion.main() 
+                simulacion.main() 
             case 3:
                 print("\nMostrando mejor ruta...")
-            #¡¡mostrar otra simulacion
+                modelo_ml.main()
             case 4:
                 print("\nVolviendo al menu")
                 break
@@ -51,8 +53,10 @@ while True:
             submenu_mapa_grafos_simulacion()                     # <- Llamamos la fun que definimos
         case 2:
             print("\nMostrando estadisticas...")
+            #estadisticas.main()
         case 3:
             print("\n=== Modelo para nuevas Electrolineras ===")
+            modelo_ml.main()
         case 4:
             print("\nSaliendo... ")
             break 
