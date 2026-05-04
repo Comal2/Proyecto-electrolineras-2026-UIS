@@ -22,7 +22,7 @@
 - [x] `grafo.py` carga el grafo, procesa electrolineras y puntos, y guarda los resultados
 - [x] `datos/electrolineras_con_nodos.csv` generado (8 electrolineras con columna `nodo_mapa`)
 - [x] `datos/puntos_con_nodos.csv` generado (10 puntos con columna `nodo_mapa`)
-- [ ] **Bug pendiente:** Error `File is not a zip file` al leer `estadisticas.xlsx` — la función `procesar_estadisticas()` debe comentarse hasta que P2 genere el archivo real
+- [x] **Bug pendiente:** Error `File is not a zip file` al leer `estadisticas.xlsx` — la función `procesar_estadisticas()` debe comentarse hasta que P2 genere el archivo real
 
 ### Persona 2 — Simulación
 - [x] Lectura del archivo `vehiculos.json` funcionando
@@ -62,7 +62,7 @@
 ### 👤 Persona 1 — Tareas del 4 al 8 de mayo
 
 #### Lunes 4 mayo
-🔴 **Corregir el bug del Excel en `grafo.py`**
+- [x] 🔴 **Corregir el bug del Excel en `grafo.py`**
 Buscar la línea que llama a `procesar_estadisticas()` y po un comentario `#` al inicio para desactivarla temporalmente. El archivo Excel todavía está vacío porque P2 no ha generado datos reales. Cuando P2 lo llene, se reactiva esta línea.
 ```python
 # datos_estadisticas = procesar_estadisticas(RUTA_ESTADISTICAS)  # Activar cuando P2 genere datos
@@ -70,7 +70,7 @@ Buscar la línea que llama a `procesar_estadisticas()` y po un comentario `#` al
 Verificar que `grafo.py` corre sin ningún error de principio a fin.
 
 #### Martes 5 — Miércoles 6 mayo
-🔴 **Implementar `electrolinera_mas_cercana(grafo, nodo_origen)` en `grafo.py`**
+- [x] 🔴 **Implementar `electrolinera_mas_cercana(grafo, nodo_origen)` en `grafo.py`**
 
 Esta función recibe la posición actual del vehículo (como número de nodo del grafo) y devuelve cuál de las 8 electrolineras queda más cerca **por carretera**, no en línea recta.
 
