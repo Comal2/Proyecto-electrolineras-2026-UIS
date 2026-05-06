@@ -2,7 +2,7 @@ import sys
 import os
 #from modelo_ml import predecir_zonas_ml()
 from grafo import IMAGEN_PATH  #importamos el grafo con los "nodos"
-#from estadisticas.csv import leer_estadisticas()    #funcion de esta
+#from estadisticas.csv import leer_estadisticas()    #funcion de estadisticas
 #import simular_recorridos(grafo_area)       #import opcion de la simulacion
 
 sys.path.insert(0, os.path.dirname(__file__))
@@ -22,10 +22,12 @@ while True:
         
     match(opcion):
         case 1:
-
+            grafo_area = None               #Variable global
             """=== SUBMENU DENTRO DE LA OP 1 ==="""
-            
+
             def submenu_mapa_grafos_simulacion():                  # <- definimos la fun que llamamos
+                global grafo_area           #como activar su uso
+
                 while True:
                     print("\n=== Mapa, grafo y simulaciones ===")
                     print("1. Cargar mapa/grafo")
@@ -35,15 +37,18 @@ while True:
                         
                     match(sub_opcion):
                         case 1:
-                            print("\nMostrando mapa/grafo")
+                            print("\nCargando mapa/grafo...")
                             grafo_area = IMAGEN_PATH
                             print(grafo_area)
+                            if grafo_area is not None:                 #validacion del mapa
+                                print("mapa listo para usar :) ")
                             
-                            # ¡¡¡ recordar hacer validacion de que el mapa cargo !!!
-
                         case 2:
-                            print("\nSimulando recorrido...")
-                            #print(simular_recorridos())                  #simulacion
+                            if grafo_area is None:                      
+                                print("ERROR. (primero selecciones la opcion 1)")
+                            else:
+                                print("\nSimulando recorrido...")
+                                #print(simular_recorridos(grafo_area))                  #simulacion
                             
 
                         case 3:
@@ -51,15 +56,24 @@ while True:
                             break
                         case _:
                             print("Opcion invalida")
-                                
+
             submenu_mapa_grafos_simulacion()                     # <- Llamamos la fun que definimos
+                   
         
         case 2:
             print("\nMostrando estadisticas...")
-            #print(leer_estadisticas())
+            if grafo_area is None:
+                print("ERROR. (primero selecciones la opcion 1)")
+            else:
+                #print(leer_estadisticas())
+                pass
         case 3:
             print("\n=== Modelo para nuevas Electrolineras ===")
-            #print(predecir_ubicaciones.main())
+            if grafo_area is None:
+                print("ERROR. (primero selecciones la opcion 1)")   
+            else:             
+                #print(predecir_ubicaciones.main())
+                pass
         case 4:
             print("\nSaliendo... ")
             break 
