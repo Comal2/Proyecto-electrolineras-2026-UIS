@@ -98,7 +98,7 @@ Avisar a P2 que la función ya está lista para que la integre en la simulación
 ### 👤 Persona 2 — Tareas del 4 al 8 de mayo
 
 #### Lunes 4 mayo
-🔴 **Mover el código a rama correcta y convertirlo en clase**
+- [x] 🔴 **Mover el código a rama correcta y convertirlo en clase**
 
 Primero crear la rama:
 ```bash
@@ -213,7 +213,7 @@ def main():
 ```
 
 #### Miércoles 6 mayo
-🔴 **Crear estructura base de `modelo_ml.py`**
+- [x] 🔴 **Crear estructura base de `modelo_ml.py`**
 
 No hace falta que el modelo funcione todavía, pero el archivo debe tener la estructura clara con comentarios de qué va en cada sección:
 ```python
