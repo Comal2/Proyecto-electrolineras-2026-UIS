@@ -296,13 +296,63 @@ if __name__ == "__main__":
             df_puntos.to_csv(ruta_salida_puntos, index=False)
             print(f"\nEl resultado de guardado en:\n   {ruta_salida_puntos}")
 
-        # 6. Demo: tomamos el primer punto de referencia y buscamos la
-        # electrolinera más cercana. Sirve como prueba rápida de que todo
-        # el flujo funciona de principio a fin.
+        # ==========================================================
+        # 6. DEMO / PRUEBA RÁPIDA DE electrolinera_mas_cercana()
+        # ==========================================================
+        # Esta sección es solo una prueba: toma un punto de referencia
+        # ("UIS Campus Central" si existe, si no el primero del CSV) y
+        # llama a la función para ver qué electrolinera queda más cerca
+        # por carretera. NO es necesaria para que el resto del programa
+        # funcione: si un compañero quiere desactivarla, debe comentar
+        # desde el "if df_puntos is not None..." hasta el último print
+        # de "Verificación OK..." (o sea, todo el bloque de abajo).
+        #
+        # ¿Qué hace electrolinera_mas_cercana(grafo, nodo_origen)?
+        #   - Recibe el grafo vial ya cargado y un nodo de partida.
+        #   - Recorre todas las electrolineras del CSV procesado y, con
+        #     Dijkstra (nx.shortest_path_length, peso='length'), calcula
+        #     la distancia REAL por calles desde nodo_origen a cada una.
+        #   - Devuelve un dict {nombre, nodo, distancia_m} con la más
+        #     cercana, o None si no hay ruta.
+        #
+        # ¿Cómo modificarla para que el USUARIO ingrese el nodo?
+        #   Reemplazar la búsqueda automática por algo como:
+        #       nodo_usuario = int(input("Ingrese el nodo de origen: "))
+        #       electrolinera_mas_cercana(grafo_area, nodo_usuario)
+        #   O, más amigable, pedir el NOMBRE del punto y buscar su nodo:
+        #       nombre = input("Punto de origen: ")
+        #       fila = df_puntos[df_puntos['nombre'] == nombre].iloc[0]
+        #       electrolinera_mas_cercana(grafo_area, int(fila['nodo_mapa']))
+        # ==========================================================
         if df_puntos is not None and len(df_puntos) > 0:
-            primer_punto = df_puntos.iloc[0]
-            print(f"\nDemo desde '{primer_punto['nombre']}' (nodo {primer_punto['nodo_mapa']}):")
-            electrolinera_mas_cercana(grafo_area, int(primer_punto['nodo_mapa']))
+            # Filtramos el DataFrame buscando filas cuyo 'nombre' contenga
+            # "UIS Campus Central" (case=False -> no distingue mayúsculas;
+            # na=False -> ignora celdas vacías sin lanzar error).
+            coincidencia = df_puntos[df_puntos['nombre'].str.contains(
+                "UIS Campus Central", case=False, na=False
+            )]
+            # Si encontró el punto lo usa; si no, cae al primero disponible.
+            # Esto evita que la demo se rompa si cambian los nombres del CSV.
+            punto_demo = coincidencia.iloc[0] if len(coincidencia) > 0 else df_puntos.iloc[0]
+
+            # Mostramos desde dónde estamos buscando, para que en consola
+            # quede claro qué punto y qué nodo se le pasó a la función.
+            print(f"\nDemo desde '{punto_demo['nombre']}' (nodo {punto_demo['nodo_mapa']}):")
+
+            # Llamada principal: aquí es donde realmente se ejecuta Dijkstra.
+            # int(...) porque los nodos del grafo son enteros y pandas a veces
+            # los entrega como float64. Guardamos el resultado para verificar.
+            resultado = electrolinera_mas_cercana(grafo_area, int(punto_demo['nodo_mapa']))
+
+            # Verificación rápida (sanity check):
+            #   - 'nombre' no vacío -> la electrolinera devuelta es real.
+            #   - distancia > 0     -> Dijkstra calculó algo con sentido
+            #     (si fuera 0, el origen y el destino serían el mismo nodo,
+            #      lo cual sería sospechoso en una demo desde la UIS).
+            if resultado is not None:
+                assert resultado['nombre'], "La electrolinera devuelta no tiene nombre."
+                assert resultado['distancia_m'] > 0, "Distancia no válida."
+                print("Verificación OK: electrolinera real y distancia con sentido.")
 
     else:
         print("\nNo se puede continuar sin el grafo vial.")
