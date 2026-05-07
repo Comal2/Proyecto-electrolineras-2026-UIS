@@ -28,7 +28,7 @@
 - [x] Lectura del archivo `vehiculos.json` funcionando
 - [x] Lógica de consumo de batería implementada (fórmula `(km / autonomia) * 100`)
 - [x] Trigger de alerta al 20% de batería funcionando
-- [ ] **Pendiente de corrección:** Pull Request subido directo a `main` — debe moverse a rama `feature/simulacion`
+- [x] **Pendiente de corrección:** Pull Request subido directo a `main` — debe moverse a rama `feature/simulacion`
 - [ ] Código debe convertirse en clase `Vehiculo` importable (actualmente es un script suelto)
 - [ ] Función `recargar()` no implementada (reseteo de batería y contador de recargas)
 - [ ] Simulación de recorridos aleatorios no implementada
@@ -80,12 +80,12 @@ Pasos concretos:
 3. Retornar el nombre y nodo de la electrolinera con menor distancia
 
 #### Jueves 7 mayo
-🟡 **Probar la función con nodos reales**
+- [x] 🟡 **Probar la función con nodos reales**
 
 Tomar cualquier nodo del grafo (por ejemplo, el nodo de `UIS Campus Central` del archivo `puntos_con_nodos.csv`) y llamar la función. Verificar que devuelve una electrolinera real y una distancia con sentido (entre 500m y 15km aproximadamente).
 
 #### Viernes 8 mayo
-🟢 **Commit y push a rama `feature/grafo`**
+- [ ] 🟢 **Commit y push a rama `feature/grafo`**
 ```bash
 git add codigo/grafo.py
 git commit -m "feat: función electrolinera_mas_cercana con Dijkstra"
