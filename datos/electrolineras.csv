@@ -1,9 +1,9 @@
 id,nombre,latitud,longitud,tipo_carga,potencia_kw,zona
-E1,Homecenter,7.1166407,-73.1201270,alta_potencia,150,San Rafael
-E2,CC Quinta Etapa,7.115420640034982,-73.10766131582209,normal,50,Quinta Etapa
-E3,CC Cacique,7.09929060866683,-73.10713409909908,alta_potencia,150,Cacique
-E4,CC Canaveral,7.0708246569704745,-73.10626505872307,alta_potencia,150,Canaveral
+E1,Homecenter,7.1166407,-73.1201270,alta_potencia,150,Centro-Bga
+E2,CC Quinta Etapa,7.115420640034982,-73.10766131582209,normal,50,Cabecera
+E3,CC Cacique,7.09929060866683,-73.10713409909908,alta_potencia,150,Cabecera
+E4,CC Canaveral,7.0708246569704745,-73.10626505872307,alta_potencia,150,Floridablanca-Centro
 E5,EDS Terpel Piedecuesta,6.9980135,-73.0521321,alta_potencia,150,Piedecuesta
-E6,Éxito de la Rosita,7.113356086941692,-73.12313842061032,normal,50,La Rosita
-E7,CC la Florida,7.069603582131851,-73.10528766987646,normal,50,La Florida
-E8,Promotores del Oriente,7.085365674999598,-73.16469082573603,alta_potencia,150,Oriente
+E6,Éxito de la Rosita,7.113356086941692,-73.12313842061032,normal,50,Centro-Bga
+E7,CC la Florida,7.069603582131851,-73.10528766987646,normal,50,Floridablanca-Centro
+E8,Promotores del Oriente,7.085365674999598,-73.16469082573603,alta_potencia,150,Girón
