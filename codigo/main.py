@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
     
 """=== MENU PRINCIPAl ==="""
-
+grafo_area = None               #Variable global
 while True:
     print("\n=== MENÚ PRINCIPAL ===")
     print("1. Ver mapa y grafo")  
@@ -23,7 +23,6 @@ while True:
         
     match(opcion):
         case 1:
-            grafo_area = None               #Variable global
             """=== SUBMENU DENTRO DE LA OP 1 ==="""
 
             def submenu_mapa_grafos_simulacion():                  # <- definimos la fun que llamamos
