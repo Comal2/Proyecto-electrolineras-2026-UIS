@@ -1,0 +1,14 @@
+[
+  {
+    "vehiculo":"BMW i4 eDrive40",
+    "electrolinera":"Homecenter",
+    "bateria_al_recargar":17.2,
+    "numero_recorrido":39
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"Homecenter",
+    "bateria_al_recargar":19.1,
+    "numero_recorrido":26
+  }
+]

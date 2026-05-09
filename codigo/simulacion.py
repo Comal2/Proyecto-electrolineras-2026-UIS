@@ -1,6 +1,8 @@
 import json  # Leer el archivo json
 import os    # Con esto manejamos las carpetas y rutas sin importar donde se ejecute
-import pandas as pd
+import pandas as pd # Leer los archivos csv
+import networkx as nx # Para manejar el grafo del mapa y calcular rutas/distancias
+import random # Para seleccionar puntos de referencia aleatorios
 
 # 1. Cargar datos desde el archivo JSON
 
@@ -10,119 +12,102 @@ with open(ruta_json, "r") as archivo:
 
 vehiculos = datos["vehiculos"]
 
-# 2. Cargar los datos del referencia y las electrolinera
+# 2. Cargar los datos de los puntos de referencia y las electrolinera
 
-ruta_puntos = os.path.join(os.path.dirname(__file__), "../datos/puntos_referencia.csv")
-ruta_electrolineras = os.path.join(os.path.dirname(__file__), "../datos/electrolineras.csv")
+ruta_puntos = os.path.join(os.path.dirname(__file__), "../datos/puntos_con_nodos.csv")
+ruta_electrolineras = os.path.join(os.path.dirname(__file__), "../datos/electrolineras_con_nodos.csv")
 
     #Pandas convierte el csv en un DataFrame(df)
 
 df_puntos = pd.read_csv(ruta_puntos)        
 df_electrolineras = pd.read_csv(ruta_electrolineras)
 
-print("--- Vistazo a los puntos de referencia ---")
-print(df_puntos.head())  # .head() muestra solo las primeras 5 filas
+    #Convertimos los DataFrames a listas de diccionarios para facilitar su uso en la simulación
 
-print("\n--- Columnas detectadas en electrolineras ---")
-print(df_electrolineras.columns)
+puntos      = df_puntos.to_dict(orient="records")
+electrolineras = df_electrolineras.to_dict(orient="records")
+
+# 3. Cargar el grafo del mapa
+
+ruta_mapa = os.path.join(os.path.dirname(__file__), "../datos/area_metropolitana.graphml")
+G = nx.read_graphml(ruta_mapa)
+
+# Convertimos los pesos de las aristas a flotantes
+for u, v, d in G.edges(data=True):
+    d['length'] = float(d.get('length', 1)) # 'length' usa el nombre del peso en graphml
 
 #Recargas
 historial_recargas = []
 
-# 2. Clase del vehículo eléctrico 
 
-class vehiculo:
+# 4. Clase del vehículo eléctrico 
+
+class Vehiculo:
 
     def __init__(self, modelo, autonomia, bateria_kwh, eficiencia):
-        self.modelo         = modelo
-        self.autonomia      = autonomia
-        self.bateria_kwh    = bateria_kwh
-        self.eficiencia     = eficiencia
-        self.bateria_actual = 100.0
-        self.aviso          = False
-        self.contador_recargas = 0
+        self.modelo               = modelo
+        self.autonomia            = autonomia
+        self.bateria_kwh          = bateria_kwh
+        self.eficiencia           = eficiencia
+        self.bateria_actual       = 100.0
+        self.contador_recargas    = 0
         self.acumulador_distancia = 0.0
 
-    def consumo_bateria(self, km):
-        consumo             = (km / self.autonomia) * 100
+    def consumir(self, km):
+        consumo = (km / self.autonomia) * 100
         self.bateria_actual = round(self.bateria_actual - consumo, 1)
 
-        if self.bateria_actual < 0:     # Validamos que la bateria no sea negativa
+        if self.bateria_actual < 0:
             self.bateria_actual = 0.0
 
-        print(f"{self.modelo} recorrió {km} km")
-        print(f"Batería restante: {self.bateria_actual}%")
+        print(f"{self.modelo} recorrió {km:.2f} km — Batería: {self.bateria_actual}%")
 
-        if self.bateria_actual <= 20.0 and not self.aviso:
-            print("⚠️  BATERÍA BAJA — Buscar electrolinera cercana")
-            self.aviso = True
+        return self.bateria_actual <= 20.0
+
+    def recargar(self):
+        self.bateria_actual = 100.0
+        self.contador_recargas += 1
+        print(f"🔋 {self.modelo} recargado al 100%")
 
         print()
 
-# 3. Mostrar los vehículos disponibles
+#5. La función para encontrar la electrolinera más cercana al punto de referencia seleccionado, usando las distancias entre nodos
+def electrolinera_mas_cercana(G, nodo_actual, electrolineras):
+    def distancia(e):
+        try:
+            return nx.shortest_path_length(G, source=nodo_actual, target=e["nodo_mapa"], weight='length')
+        except:
+            return float('inf')
+    return min(electrolineras, key=distancia)
 
+#6. Lógica de la simulación
 
+if __name__ == "__main__":
+    print("============== Simulación ==============")
+    n = int(input("Ingrese la cantidad de recorridos que desea simular: "))
 
-print("=== Vehículos disponibles ===")
-for i in range(len(vehiculos)):
-    print(f"[{i+1}] {vehiculos[i]['modelo']} | Gama: {vehiculos[i]['gama']} | Autonomía: {vehiculos[i]['autonomia_km']} km")
-
-print()
-
-# 4. Seleccionar un vehículo
-
-opcion = int(input("Elige una opcion: "))
-
-print()
-
-match opcion:
-    case 1:
-        indice = 0
-    case 2:
-        indice = 1
-    case _:
-        print("Opcion no valida")
-
-modelo      = vehiculos[indice]["modelo"]
-autonomia   = vehiculos[indice]["autonomia_km"]
-bateria_kwh = vehiculos[indice]["bateria_kwh"]
-eficiencia  = vehiculos[indice]["Eficiencia/consumo_Wh_por_km"]
-
-# 5. Crear el objeto con los datos del vehículo seleccionado 
-
-auto = vehiculo(modelo, autonomia, bateria_kwh, eficiencia)
-
-# 6. Distancias de prueba (inventadas)
-
-distancias = [50, 80, 60, 90, 40, 90, 50, 80, 60, 90, 40, 90]  # Lista de las distancias
-
-# 7. Simulación
-
-print(f"=== Simulación: {modelo} ===")
-print(f"Autonomía: {autonomia} km | Batería: {bateria_kwh} kWh | Eficiencia: {eficiencia} Wh/km")
-print()
-
-for km in distancias:
-    auto.consumo_bateria(km)
-    auto.acumulador_distancia = auto.acumulador_distancia + km
-
-    if auto.bateria_actual <= 20.0:
-        auto.bateria_actual = 100.0   #Cargamos la batería al 100%
-        auto.aviso          = False   # Reseteamos el aviso para el siguiente ciclo
-        auto.contador_recargas = auto.contador_recargas +1
+    for veh_data in vehiculos:
+        auto = Vehiculo(veh_data["modelo"], veh_data["autonomia_km"], veh_data["bateria_kwh"], veh_data["Eficiencia/consumo_Wh_por_km"])
         
+        for i in range(n):
+            origen, destino = random.sample(puntos, 2)
+            # Le dicimos a networkx la distancia entre el nodo de origen y destino, usando el peso 'length' que representa la distancia en km
+            distancia_km = nx.shortest_path_length(G, source=str(origen["nodo_mapa"]), target=str(destino["nodo_mapa"]), weight='length') / 1000
+            
+            necesita_recarga = auto.consumir(distancia_km)
+            
+            if necesita_recarga:
+                elec = electrolinera_mas_cercana(G, destino["nodo_mapa"], electrolineras)
+                historial_recargas.append({
+                    "vehiculo": auto.modelo,
+                    "electrolinera": elec["nombre"],
+                    "bateria_al_recargar": auto.bateria_actual,
+                    "numero_recorrido": i + 1
+                })
+                auto.recargar()
 
-        print("🔋 Se recargó la batería al 100%")
-        
-        # Ejemplo de cómo guardarías la fila de datos
-        datos_recarga = {
-        "vehiculo": auto.modelo,
-        "electrolinera": "Nombre de la Estación", # Esto vendrá del CSV luego
-        "porcentaje_bateria": auto.bateria_actual,
-        "numero_recorridos": auto.contador_recargas
-        }
-        historial_recargas.append(datos_recarga)  
-        print()   
-
-print(f"El vehículo ha recargado {auto.contador_recargas} veces")
-print(f"Distancia total recorrida: {auto.acumulador_distancia} km")
+    df = pd.DataFrame(historial_recargas)
+    ruta_estadisticas = os.path.join(os.path.dirname(__file__), "../datos")
+    df.to_csv(os.path.join(ruta_estadisticas, "estadisticas.csv"), index=False)
+    df.to_json(os.path.join(ruta_estadisticas, "estadisticas.json"), orient="records", indent=2)
+    df.to_excel(os.path.join(ruta_estadisticas, "estadisticas.xlsx"), index=False)
