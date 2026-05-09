@@ -1,14 +1,33 @@
 import json  # Leer el archivo json
 import os    # Con esto manejamos las carpetas y rutas sin importar donde se ejecute
+import pandas as pd
 
 # 1. Cargar datos desde el archivo JSON
 
 ruta_json = os.path.join(os.path.dirname(__file__), "../datos/vehiculos.json")
-
 with open(ruta_json, "r") as archivo:
     datos = json.load(archivo)
 
 vehiculos = datos["vehiculos"]
+
+# 2. Cargar los datos del referencia y las electrolinera
+
+ruta_puntos = os.path.join(os.path.dirname(__file__), "../datos/puntos_referencia.csv")
+ruta_electrolineras = os.path.join(os.path.dirname(__file__), "../datos/electrolineras.csv")
+
+    #Pandas convierte el csv en un DataFrame(df)
+
+df_puntos = pd.read_csv(ruta_puntos)        
+df_electrolineras = pd.read_csv(ruta_electrolineras)
+
+print("--- Vistazo a los puntos de referencia ---")
+print(df_puntos.head())  # .head() muestra solo las primeras 5 filas
+
+print("\n--- Columnas detectadas en electrolineras ---")
+print(df_electrolineras.columns)
+
+#Recargas
+historial_recargas = []
 
 # 2. Clase del vehículo eléctrico 
 
@@ -88,13 +107,22 @@ for km in distancias:
     auto.acumulador_distancia = auto.acumulador_distancia + km
 
     if auto.bateria_actual <= 20.0:
-        auto.bateria_actual = 100.0
+        auto.bateria_actual = 100.0   #Cargamos la batería al 100%
         auto.aviso          = False   # Reseteamos el aviso para el siguiente ciclo
         auto.contador_recargas = auto.contador_recargas +1
         
 
         print("🔋 Se recargó la batería al 100%")
-        print()
+        
+        # Ejemplo de cómo guardarías la fila de datos
+        datos_recarga = {
+        "vehiculo": auto.modelo,
+        "electrolinera": "Nombre de la Estación", # Esto vendrá del CSV luego
+        "porcentaje_bateria": auto.bateria_actual,
+        "numero_recorridos": auto.contador_recargas
+        }
+        historial_recargas.append(datos_recarga)  
+        print()   
 
 print(f"El vehículo ha recargado {auto.contador_recargas} veces")
 print(f"Distancia total recorrida: {auto.acumulador_distancia} km")
