@@ -2,6 +2,7 @@
 import sys
 import os
 #from modelo_ml import predecir_zonas_ml()
+from mapa import abrir_mapa_html
 from grafo import cargar_grafo, RUTA_GRAPHML  #importamos el grafo con los "nodos"
 #from estadisticas.csv import leer_estadisticas()    #funcion de estadisticas
 #import simular_recorridos(grafo_area)       #import opcion de la simulacion
@@ -40,9 +41,10 @@ while True:
                             print("\nCargando mapa/grafo...")
                             grafo_area = cargar_grafo(RUTA_GRAPHML)
                             print(grafo_area)
+                            print(f"=== Mostrando Mapa ===\n{abrir_mapa_html()}")
                             if grafo_area is not None:                 #validacion del mapa
                                 print("mapa listo para usar :) ")
-                            
+
                         case 2:
                             #funciones de la simulacion
                             if grafo_area is None:                      
