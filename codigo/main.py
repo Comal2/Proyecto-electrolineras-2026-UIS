@@ -38,12 +38,13 @@ while True:
                     match(sub_opcion):
                         case 1:
                             print("\nCargando mapa/grafo...")
-                            grafo_area = cargar_grafo, RUTA_GRAPHML
+                            grafo_area = cargar_grafo(RUTA_GRAPHML)
                             print(grafo_area)
                             if grafo_area is not None:                 #validacion del mapa
                                 print("mapa listo para usar :) ")
                             
                         case 2:
+                            #funciones de la simulacion
                             if grafo_area is None:                      
                                 print("ERROR. (primero selecciones la opcion 1)")
                             else:
