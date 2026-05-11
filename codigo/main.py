@@ -2,7 +2,7 @@
 import sys
 import os
 #from modelo_ml import predecir_ubicaciones
-from mapa import abrir_mapa_html
+#from mapa import abrir_mapa_html
 from grafo import cargar_grafo, RUTA_GRAPHML  #importamos el grafo con los "nodos"
 #from estadisticas.csv import leer_estadisticas()    #funcion de estadisticas
 #import simular_recorridos(grafo_area)       #import opcion de la simulacion
@@ -30,7 +30,7 @@ while True:
                 global grafo_area           #como activar el uso de la variable global
 
                 while True:
-                    print("\n=== Mapa, grafo y simulaciones ===")
+                    print("\n=== SUBMENÚ ===")
                     print("1. Cargar mapa/grafo")
                     print("2. Simular recorridos")
                     print("3. Volver al menu principal")
@@ -41,7 +41,7 @@ while True:
                             print("\nCargando mapa/grafo...")
                             grafo_area = cargar_grafo(RUTA_GRAPHML)
                             print(grafo_area)
-                            print(abrir_mapa_html())
+                            #print(abrir_mapa_html())
 
                             if grafo_area is not None:                 #validacion del mapa
                                 print("mapa listo para usar :) ")
