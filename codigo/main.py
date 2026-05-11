@@ -1,7 +1,7 @@
 #main/menu
 import sys
 import os
-#from modelo_ml import predecir_zonas_ml()
+#from modelo_ml import predecir_ubicaciones
 from mapa import abrir_mapa_html
 from grafo import cargar_grafo, RUTA_GRAPHML  #importamos el grafo con los "nodos"
 #from estadisticas.csv import leer_estadisticas()    #funcion de estadisticas
@@ -27,7 +27,7 @@ while True:
             """=== SUBMENU DENTRO DE LA OP 1 ==="""
 
             def submenu_mapa_grafos_simulacion():                  # <- definimos la fun que llamamos
-                global grafo_area           #como activar su uso
+                global grafo_area           #como activar el uso de la variable global
 
                 while True:
                     print("\n=== Mapa, grafo y simulaciones ===")
@@ -41,12 +41,12 @@ while True:
                             print("\nCargando mapa/grafo...")
                             grafo_area = cargar_grafo(RUTA_GRAPHML)
                             print(grafo_area)
-                            print(f"=== Mostrando Mapa ===\n{abrir_mapa_html()}")
+                            print(abrir_mapa_html())
+
                             if grafo_area is not None:                 #validacion del mapa
                                 print("mapa listo para usar :) ")
-
+                            
                         case 2:
-                            #funciones de la simulacion
                             if grafo_area is None:                      
                                 print("ERROR. (primero selecciones la opcion 1)")
                             else:
@@ -75,7 +75,7 @@ while True:
             if grafo_area is None:
                 print("ERROR. (primero selecciones la opcion 1)")   
             else:             
-                #print(predecir_ubicaciones.main())
+                #print(predecir_ubicaciones(modelo, datos_nuevos))      #prediccion
                 pass
         case 4:
             print("\nSaliendo... ")
