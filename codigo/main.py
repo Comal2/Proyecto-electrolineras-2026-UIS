@@ -2,9 +2,9 @@
 import pandas as pd
 import sys
 import os
-from modelo_ml import cargar_datos, entrenar_modelo, predecir_ubicaciones
+from modelo_ml import cargar_datos, entrenar_modelo, predecir_zonas
 from grafo import cargar_grafo, RUTA_GRAPHML  
-from simulacion import simular_recorridos
+#from simulacion import simular_recorridos
 
 DIRECTORIO_MAIN = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(__file__))
