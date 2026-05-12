@@ -1,7 +1,6 @@
 import os
 import folium
 import pandas as pd
-import resultados
 
 #enrutamos los csv y los definimos 
 DIRECTORIO = os.path.dirname(os.path.abspath(__file__)) #guarda la ubicacion del mapa.py
@@ -29,5 +28,5 @@ for _, fila in df_p.iterrows():
     ).add_to(mapa)
 
 mapa.save(os.path.join(DIRECTORIO, "../resultados/mapa_base.html")) # codigo de prueba o referencia visual, no refleja el resultado final.
-print(f"Mapa guardado con exito en {resultados}")
+print(f"Mapa guardado con exito en {DIRECTORIO, "../resultados/mapa_base.html"}")
 
