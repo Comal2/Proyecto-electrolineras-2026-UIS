@@ -19,8 +19,12 @@ while True:
     print("2. Ver estadisticas de uso")
     print("3. Modelo predictivo de nuevas electrolineras")
     print("4. Salir")
-    opcion = int(input("\nElige una opción: "))
-        
+    try:
+        opcion = int(input("\nElige una opción: "))
+    except ValueError:
+        print("Opcion invalida, ingrese un numero..")
+        continue    
+
     match(opcion):
         case 1:
             """=== SUBMENU DENTRO DE LA OP 1 ==="""
@@ -33,13 +37,16 @@ while True:
                     print("1. Cargar mapa/grafo")
                     print("2. Simular recorridos")
                     print("3. Volver al menu principal")
-                    sub_opcion = int(input("Elige una opcion: "))
-                        
+                    try:
+                        sub_opcion = int(input("Elige una opcion: "))
+                    except ValueError:
+                        print("Opcion invalida, ingrese un numero..")
+                        continue    
+
                     match(sub_opcion):
                         case 1:
                             print("\nCargando mapa/grafo...")
                             grafo_area = cargar_grafo(RUTA_GRAPHML)
-
                             if grafo_area is not None:                 #validacion del mapa
                                 print("mapa listo para usar :) ")
                             
@@ -50,7 +57,6 @@ while True:
                                 print("\nSimulando recorrido...")
                                 #print(simular_recorridos(grafo_area))                  #simulacion
                             
-
                         case 3:
                             print("\nVolviendo al menu")
                             break
