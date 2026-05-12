@@ -28,5 +28,5 @@ for _, fila in df_p.iterrows():
     ).add_to(mapa)
 
 mapa.save(os.path.join(DIRECTORIO, "../resultados/mapa_base.html")) # codigo de prueba o referencia visual, no refleja el resultado final.
-print(f"Mapa guardado con exito en {DIRECTORIO, "../resultados/mapa_base.html"}")
+#print(f"Mapa guardado con exito en {}") 
 
