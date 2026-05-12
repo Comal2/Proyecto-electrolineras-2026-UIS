@@ -1,10 +1,10 @@
-#main/menu
+"""main/menu"""
 import pandas as pd
 import sys
 import os
 from modelo_ml import cargar_datos, entrenar_modelo, predecir_ubicaciones
 from grafo import cargar_grafo, RUTA_GRAPHML  
-#import simular_recorridos(grafo_area)      
+from simulacion import simular_recorridos
 
 DIRECTORIO_MAIN = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(__file__))
@@ -56,7 +56,7 @@ while True:
                                 print("ERROR. (primero selecciones la opcion 1)")
                             else:
                                 print("\nSimulando recorrido...")
-                                #simular_recorridos(grafo_area))
+                                simular_recorridos(grafo_area)
                                 
                             
                         case 3:
@@ -79,15 +79,21 @@ while True:
                     df = pd.read_csv(ruta_estadisticas)
                     print(df.to_string()) 
                 except FileNotFoundError:
-                    print(f"ERROR : no se encontro el archivo, primero simule")
+                    print("ERROR : no se encontro el archivo, primero simule")
                 pass
             
         case 3:
             print("\n=== Modelo para nuevas Electrolineras ===")
             if grafo_area is None:
-                print("ERROR. (primero selecciones la opcion 1)")   
-            else:             
-                #print(predecir_ubicaciones(modelo, datos_nuevos))      #prediccion
+                print("ERROR. (primero seleccione la opcion 1)")   
+            else:
+                
+                #try:
+                    #llamo fun cargar_datos -> 
+                    #llamo fun entrenar_modelo 
+                #except FileNotFoundError:
+                    #print("ERROR : no se encontro el archivo, primero simule")
+
                 pass
         case 4:
             print("\nSaliendo... ")
