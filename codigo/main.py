@@ -2,9 +2,8 @@
 import sys
 import os
 #from modelo_ml import predecir_ubicaciones
-#from mapa import abrir_mapa_html
 from grafo import cargar_grafo, RUTA_GRAPHML  #importamos el grafo con los "nodos"
-#from estadisticas.csv import leer_estadisticas()    #funcion de estadisticas
+from mapa import DIRECTORIO, mapa
 #import simular_recorridos(grafo_area)       #import opcion de la simulacion
 
 sys.path.insert(0, os.path.dirname(__file__))
@@ -40,8 +39,6 @@ while True:
                         case 1:
                             print("\nCargando mapa/grafo...")
                             grafo_area = cargar_grafo(RUTA_GRAPHML)
-                            print(grafo_area)
-                            #print(abrir_mapa_html())
 
                             if grafo_area is not None:                 #validacion del mapa
                                 print("mapa listo para usar :) ")
