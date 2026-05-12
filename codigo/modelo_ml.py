@@ -9,11 +9,15 @@ DIRECTORIO_ML =  os.path.dirname(os.path.abspath(__file__))
 
 def cargar_datos(ruta_csv):
     """Carga las estadísticas generadas por la simulación."""
+
     print(f"[cargar_datos] Leyendo archivo: {ruta_csv}")
+
     ruta_csv = os.path.join(DIRECTORIO_ML, 'datos', 'estadisticas.csv')
+
     if not os.path.exists(ruta_csv):
         raise FileNotFoundError(f"no se encontro el archivo {ruta_csv}")
     df = pd.read_csv(ruta_csv)
+    
     print(f"[cargar_datos] filas cargadas: {len(df)}")
     return df
 
