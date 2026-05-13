@@ -1,6 +1,8 @@
 import os
 import folium
 import pandas as pd
+from folium.plugins import HeatMap
+#from simulacion import ruta_estadisticas
 
 #enrutamos los csv y los definimos 
 DIRECTORIO = os.path.dirname(os.path.abspath(__file__)) #guarda la ubicacion del mapa.py
@@ -47,5 +49,10 @@ mapa.fit_bounds([
 
 #guardamos el mapa en los resultados
 mapa.save(os.path.join(DIRECTORIO, "../resultados/mapa_base.html")) # codigo de prueba o referencia visual, no refleja el resultado final.
- 
 
+#prueba zonas + visitadas
+if __name__ == "__main__":
+    #visitas = 
+
+    #datos_color = df_e[['latitud', 'longitud', 'visitas']].values.tolist
+    pass
