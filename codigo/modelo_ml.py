@@ -79,7 +79,7 @@ def predecir_zonas(modelo, datos_nuevos):
     df = df[feature_names]
 
     probabilidades = modelo.predict_proba(df)
-    medias = probabilidades.means(axis=0)
+    medias = probabilidades.mean(axis=0)
     orden = medias.argsort()[::-1]
     zonas = encoder.inverse_transform(orden)
 
