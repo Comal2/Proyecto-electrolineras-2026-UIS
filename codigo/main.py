@@ -1,7 +1,7 @@
 """main/menu"""
 import pandas as pd
 import os
-from modelo_ml import cargar_datos, entrenar_modelo, predecir_zonas
+from modelo_ml import cargar_datos #, entrenar_modelo, predecir_zonas
 from grafo import cargar_grafo, RUTA_GRAPHML  
 #from simulacion import simular_recorridos
 
@@ -87,9 +87,9 @@ while True:
             else:
                 
                 try:
-                    cargar_datos(ruta_estadisticas)
-                    entrenar_modelo(df)
-                    predecir_zonas(ruta_estadisticas)
+                    cargar_datos(ruta_csv=ruta_estadisticas)
+                    #entrenar_modelo(df)
+                    #predecir_zonas(ruta_estadisticas)
                 except FileNotFoundError:
                     print("ERROR : no se encontro el archivo, primero simule")
 
