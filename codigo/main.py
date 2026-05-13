@@ -1,7 +1,7 @@
 """main/menu"""
 import pandas as pd
 import os
-from modelo_ml import cargar_datos, entrenar_modelo, predecir_zonas
+from modelo_ml import cargar_datos, entrenar_modelo, predecir_ubicaciones
 from grafo import cargar_grafo, RUTA_GRAPHML  
 #from simulacion import simular_recorridos
 
@@ -10,7 +10,7 @@ DIRECTORIO_MAIN = os.path.dirname(os.path.abspath(__file__))
 
     
 """=== MENU PRINCIPAl ==="""
-grafo_area = None               #Variable global
+grafo_area = None           #variable global del grafo
 while True:
     print("\n=== MENÚ PRINCIPAL ===")
     print("1. Ver mapa y grafo")  
@@ -28,8 +28,9 @@ while True:
             """=== SUBMENU DENTRO DE LA OP 1 ==="""
 
             def submenu_mapa_grafos_simulacion(): #def funcion del submenu                 
-                global grafo_area           #como activar el uso de la variable global
-
+                global grafo_area      #activacion de la variable global
+                #esta variable hace que se mantenga incluso fuera del while
+                #osea, cuando esta se carga con cargar_grafo(RUTA:GRAPHML) queda asi para todo el script
                 while True:
                     print("\n=== SUBMENÚ ===")
                     print("1. Cargar mapa/grafo")
@@ -70,28 +71,54 @@ while True:
             if grafo_area is None:
                 print("ERROR. (primero selecciones la opcion 1)")
             else:
-                ruta_estadisticas = os.path.join(DIRECTORIO_MAIN, 'datos', 'estadisticas.csv' )
+                ruta_estadisticas = os.path.abspath(os.path.join(DIRECTORIO_MAIN, os.pardir, 'datos', 'estadisticas.csv'))
 
                 try:
                     df = pd.read_csv(ruta_estadisticas)
-                    print(df.to_string()) 
+                    print(df.to_string())
                 except FileNotFoundError:
-                    print("ERROR : no se encontro el archivo, primero simule")
+                    print("ERROR: no se encontró el archivo estadisticas.csv. Simula primero para generar datos.")
                 pass
             
         case 3:
             print("\n=== Modelo para nuevas Electrolineras ===")
-            if grafo_area is None:
-                print("ERROR. (primero seleccione la opcion 1)")   
+            try:
+                df = cargar_datos()
+            except FileNotFoundError:
+                print("ERROR: no se encontró el archivo de estadísticas. Simula primero para generar los datos.")
+            except Exception as err:
+                print(f"ERROR al cargar datos: {err}")
             else:
-                
-                #try:
-                    #llamo fun cargar_datos -> 
-                    #llamo fun entrenar_modelo 
-                #except FileNotFoundError:
-                    #print("ERROR : no se encontro el archivo, primero simule")
+                if df.empty:
+                    print("El archivo de estadísticas existe pero no contiene registros.")
+                else:
+                    try:
+                        modelo, encoder, features, metrics = entrenar_modelo(df)
+                    except Exception as err:
+                        print(f"ERROR al entrenar el modelo: {err}")
+                    else:
+                        print(f"Modelo entrenado con {len(df)} filas.")
+                        print(f"Precisión de prueba: {metrics['accuracy']:.2f}")
+                        print(metrics['report'])
 
-                pass
+                        ejemplos = [
+                            {"vehiculo": "Baja", "bateria_al_recargar": 25, "numero_recorrido": 5},
+                            {"vehiculo": "Media", "bateria_al_recargar": 12, "numero_recorrido": 8},
+                        ]
+                        resultados = predecir_ubicaciones(modelo, encoder, ejemplos)
+
+                        print("\nPredicciones de ejemplo:")
+                        for idx, fila in enumerate(resultados["rows"], start=1):
+                            print(f"Caso {idx}: {fila['input']}")
+                            print(f"  Predicción principal: {fila['predicted']['electrolinera']} ({fila['predicted']['probabilidad']:.2f})")
+                            print("  Top 3 candidatos:")
+                            for candidato in fila['top'][:3]:
+                                print(f"    - {candidato['electrolinera']}: {candidato['probabilidad']:.2f}")
+
+                        print("\nDemanda agregada por electrolinera:")
+                        for candidato in resultados['aggregate'][:5]:
+                            print(f"  - {candidato['electrolinera']}: {candidato['probabilidad_media']:.2f}")
+        
         case 4:
             print("\nSaliendo... ")
             break 
