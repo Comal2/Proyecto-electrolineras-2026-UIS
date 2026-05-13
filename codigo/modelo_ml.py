@@ -33,7 +33,7 @@ def cargar_datos(ruta_csv):
         print(f"ERROR INESPERADO : {e}",flush=True)
     #captura cualquier otro error inesperado
 
-        return df
+    return df
 
 def preprocesar_datos(df):
     """Limpieza y Transformacion de los datos"""
@@ -73,6 +73,8 @@ def preprocesar_datos(df):
     
     except Exception as e:
         print(f"ERROR INESPERADO: {e}")
+
+    return df
 
 def entrenar_modelo(df):
     df = df.copy
