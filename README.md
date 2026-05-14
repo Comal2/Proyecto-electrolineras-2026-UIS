@@ -6,7 +6,9 @@ Sistema de infraestructura de puntos de carga - UIS 2026
 ![NetworkX](https://img.shields.io/badge/NetworkX-Grafos-1f425f?style=for-the-badge)
 ![Pandas](https://img.shields.io/badge/Pandas-Data_Analysis-150458?style=for-the-badge&logo=pandas)
 ![Folium](https://img.shields.io/badge/Folium-Mapas_Interactivos-77B829?style=for-the-badge)
-![Machine Learning](https://img.shields.io/badge/Machine_Learning-Scikit_Learn-orange?style=for-the-badge)
+![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-Machine_Learning-orange?style=for-the-badge&logo=scikitlearn)
+![OpenPyXL](https://img.shields.io/badge/OpenPyXL-Excel_Processing-217346?style=for-the-badge)
+![Matplotlib](https://img.shields.io/badge/Matplotlib-Visualización-blueviolet?style=for-the-badge)
 ![Entrega](https://img.shields.io/badge/Entrega-17%2F05%2F2026-red?style=for-the-badge)
 
 **Sistema de Simulación de Vehículos Eléctricos**. Este proyecto en Python modela el flujo y consumo de energía de vehículos eléctricos (alta y baja gama) a través de las calles reales del área metropolitana de Bucaramanga. 
