@@ -1,206 +1,404 @@
 [
   {
     "vehiculo":"Nissan LEAF Standard Range 52 kWh",
-    "electrolinera":"CC la Florida",
-    "bateria_al_recargar":16.3,
-    "numero_recorrido":23
+    "electrolinera":"\u00c9xito de la Rosita",
+    "bateria_al_recargar":19.5,
+    "numero_recorrido":25
   },
   {
     "vehiculo":"BMW i4 eDrive40",
-    "electrolinera":"CC Quinta Etapa",
-    "bateria_al_recargar":19.5,
-    "numero_recorrido":33
+    "electrolinera":"CC Cacique",
+    "bateria_al_recargar":19.0,
+    "numero_recorrido":39
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"CC la Florida",
+    "bateria_al_recargar":18.0,
+    "numero_recorrido":47
   },
   {
     "vehiculo":"Nissan LEAF Standard Range 52 kWh",
     "electrolinera":"CC Cacique",
-    "bateria_al_recargar":17.7,
-    "numero_recorrido":46
+    "bateria_al_recargar":17.0,
+    "numero_recorrido":72
+  },
+  {
+    "vehiculo":"BMW i4 eDrive40",
+    "electrolinera":"CC la Florida",
+    "bateria_al_recargar":19.4,
+    "numero_recorrido":76
   },
   {
     "vehiculo":"Nissan LEAF Standard Range 52 kWh",
-    "electrolinera":"CC la Florida",
+    "electrolinera":"EDS Terpel Piedecuesta",
+    "bateria_al_recargar":17.4,
+    "numero_recorrido":96
+  },
+  {
+    "vehiculo":"BMW i4 eDrive40",
+    "electrolinera":"EDS Terpel Piedecuesta",
+    "bateria_al_recargar":16.9,
+    "numero_recorrido":115
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"CC Quinta Etapa",
     "bateria_al_recargar":19.3,
-    "numero_recorrido":70
+    "numero_recorrido":120
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"Promotores del Oriente",
+    "bateria_al_recargar":14.3,
+    "numero_recorrido":146
   },
   {
     "vehiculo":"BMW i4 eDrive40",
     "electrolinera":"\u00c9xito de la Rosita",
-    "bateria_al_recargar":16.8,
-    "numero_recorrido":75
+    "bateria_al_recargar":19.9,
+    "numero_recorrido":156
   },
   {
     "vehiculo":"Nissan LEAF Standard Range 52 kWh",
-    "electrolinera":"CC Cacique",
-    "bateria_al_recargar":19.6,
-    "numero_recorrido":95
+    "electrolinera":"EDS Terpel Piedecuesta",
+    "bateria_al_recargar":18.0,
+    "numero_recorrido":174
   },
   {
     "vehiculo":"BMW i4 eDrive40",
-    "electrolinera":"CC Quinta Etapa",
-    "bateria_al_recargar":19.3,
-    "numero_recorrido":109
+    "electrolinera":"EDS Terpel Piedecuesta",
+    "bateria_al_recargar":19.4,
+    "numero_recorrido":195
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"EDS Terpel Piedecuesta",
+    "bateria_al_recargar":18.3,
+    "numero_recorrido":198
   },
   {
     "vehiculo":"Nissan LEAF Standard Range 52 kWh",
     "electrolinera":"CC la Florida",
-    "bateria_al_recargar":16.4,
-    "numero_recorrido":114
+    "bateria_al_recargar":17.5,
+    "numero_recorrido":224
+  },
+  {
+    "vehiculo":"BMW i4 eDrive40",
+    "electrolinera":"\u00c9xito de la Rosita",
+    "bateria_al_recargar":17.0,
+    "numero_recorrido":232
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"Homecenter",
+    "bateria_al_recargar":19.0,
+    "numero_recorrido":248
+  },
+  {
+    "vehiculo":"BMW i4 eDrive40",
+    "electrolinera":"Promotores del Oriente",
+    "bateria_al_recargar":18.7,
+    "numero_recorrido":269
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"Promotores del Oriente",
+    "bateria_al_recargar":18.2,
+    "numero_recorrido":269
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"Promotores del Oriente",
+    "bateria_al_recargar":18.8,
+    "numero_recorrido":295
+  },
+  {
+    "vehiculo":"BMW i4 eDrive40",
+    "electrolinera":"EDS Terpel Piedecuesta",
+    "bateria_al_recargar":19.8,
+    "numero_recorrido":307
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"Promotores del Oriente",
+    "bateria_al_recargar":18.4,
+    "numero_recorrido":318
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"CC Quinta Etapa",
+    "bateria_al_recargar":19.2,
+    "numero_recorrido":344
+  },
+  {
+    "vehiculo":"BMW i4 eDrive40",
+    "electrolinera":"EDS Terpel Piedecuesta",
+    "bateria_al_recargar":16.8,
+    "numero_recorrido":348
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"CC la Florida",
+    "bateria_al_recargar":18.8,
+    "numero_recorrido":369
+  },
+  {
+    "vehiculo":"BMW i4 eDrive40",
+    "electrolinera":"CC Quinta Etapa",
+    "bateria_al_recargar":18.1,
+    "numero_recorrido":386
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"Homecenter",
+    "bateria_al_recargar":19.2,
+    "numero_recorrido":392
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"EDS Terpel Piedecuesta",
+    "bateria_al_recargar":15.2,
+    "numero_recorrido":419
+  },
+  {
+    "vehiculo":"BMW i4 eDrive40",
+    "electrolinera":"Homecenter",
+    "bateria_al_recargar":17.4,
+    "numero_recorrido":430
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"CC la Florida",
+    "bateria_al_recargar":19.8,
+    "numero_recorrido":450
+  },
+  {
+    "vehiculo":"BMW i4 eDrive40",
+    "electrolinera":"\u00c9xito de la Rosita",
+    "bateria_al_recargar":19.9,
+    "numero_recorrido":473
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"EDS Terpel Piedecuesta",
+    "bateria_al_recargar":19.1,
+    "numero_recorrido":474
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"\u00c9xito de la Rosita",
+    "bateria_al_recargar":19.7,
+    "numero_recorrido":495
+  },
+  {
+    "vehiculo":"BMW i4 eDrive40",
+    "electrolinera":"CC Quinta Etapa",
+    "bateria_al_recargar":18.3,
+    "numero_recorrido":505
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"CC Cacique",
+    "bateria_al_recargar":18.5,
+    "numero_recorrido":518
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"Promotores del Oriente",
+    "bateria_al_recargar":17.9,
+    "numero_recorrido":548
+  },
+  {
+    "vehiculo":"BMW i4 eDrive40",
+    "electrolinera":"EDS Terpel Piedecuesta",
+    "bateria_al_recargar":17.4,
+    "numero_recorrido":551
   },
   {
     "vehiculo":"Nissan LEAF Standard Range 52 kWh",
     "electrolinera":"EDS Terpel Piedecuesta",
     "bateria_al_recargar":18.5,
-    "numero_recorrido":140
+    "numero_recorrido":572
+  },
+  {
+    "vehiculo":"BMW i4 eDrive40",
+    "electrolinera":"Homecenter",
+    "bateria_al_recargar":18.5,
+    "numero_recorrido":589
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"Promotores del Oriente",
+    "bateria_al_recargar":17.5,
+    "numero_recorrido":596
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"CC la Florida",
+    "bateria_al_recargar":19.0,
+    "numero_recorrido":622
+  },
+  {
+    "vehiculo":"BMW i4 eDrive40",
+    "electrolinera":"EDS Terpel Piedecuesta",
+    "bateria_al_recargar":18.8,
+    "numero_recorrido":629
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"Homecenter",
+    "bateria_al_recargar":19.8,
+    "numero_recorrido":646
+  },
+  {
+    "vehiculo":"BMW i4 eDrive40",
+    "electrolinera":"EDS Terpel Piedecuesta",
+    "bateria_al_recargar":17.6,
+    "numero_recorrido":666
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"EDS Terpel Piedecuesta",
+    "bateria_al_recargar":18.6,
+    "numero_recorrido":667
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"CC Quinta Etapa",
+    "bateria_al_recargar":19.3,
+    "numero_recorrido":689
+  },
+  {
+    "vehiculo":"BMW i4 eDrive40",
+    "electrolinera":"Homecenter",
+    "bateria_al_recargar":19.6,
+    "numero_recorrido":701
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"CC Quinta Etapa",
+    "bateria_al_recargar":19.7,
+    "numero_recorrido":714
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"CC Cacique",
+    "bateria_al_recargar":18.3,
+    "numero_recorrido":738
+  },
+  {
+    "vehiculo":"BMW i4 eDrive40",
+    "electrolinera":"EDS Terpel Piedecuesta",
+    "bateria_al_recargar":18.2,
+    "numero_recorrido":740
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"\u00c9xito de la Rosita",
+    "bateria_al_recargar":16.9,
+    "numero_recorrido":763
+  },
+  {
+    "vehiculo":"BMW i4 eDrive40",
+    "electrolinera":"CC la Florida",
+    "bateria_al_recargar":18.0,
+    "numero_recorrido":781
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"CC la Florida",
+    "bateria_al_recargar":19.9,
+    "numero_recorrido":789
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"CC la Florida",
+    "bateria_al_recargar":18.8,
+    "numero_recorrido":811
+  },
+  {
+    "vehiculo":"BMW i4 eDrive40",
+    "electrolinera":"Homecenter",
+    "bateria_al_recargar":17.6,
+    "numero_recorrido":816
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"Homecenter",
+    "bateria_al_recargar":19.7,
+    "numero_recorrido":830
+  },
+  {
+    "vehiculo":"BMW i4 eDrive40",
+    "electrolinera":"CC la Florida",
+    "bateria_al_recargar":19.7,
+    "numero_recorrido":854
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"EDS Terpel Piedecuesta",
+    "bateria_al_recargar":17.6,
+    "numero_recorrido":856
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"EDS Terpel Piedecuesta",
+    "bateria_al_recargar":16.8,
+    "numero_recorrido":875
+  },
+  {
+    "vehiculo":"BMW i4 eDrive40",
+    "electrolinera":"EDS Terpel Piedecuesta",
+    "bateria_al_recargar":18.8,
+    "numero_recorrido":885
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"CC la Florida",
+    "bateria_al_recargar":17.3,
+    "numero_recorrido":899
+  },
+  {
+    "vehiculo":"BMW i4 eDrive40",
+    "electrolinera":"EDS Terpel Piedecuesta",
+    "bateria_al_recargar":18.2,
+    "numero_recorrido":924
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"EDS Terpel Piedecuesta",
+    "bateria_al_recargar":18.5,
+    "numero_recorrido":924
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"CC Quinta Etapa",
+    "bateria_al_recargar":14.8,
+    "numero_recorrido":950
+  },
+  {
+    "vehiculo":"BMW i4 eDrive40",
+    "electrolinera":"CC Quinta Etapa",
+    "bateria_al_recargar":19.8,
+    "numero_recorrido":965
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"Promotores del Oriente",
+    "bateria_al_recargar":19.7,
+    "numero_recorrido":976
+  },
+  {
+    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
+    "electrolinera":"Homecenter",
+    "bateria_al_recargar":19.8,
+    "numero_recorrido":997
   },
   {
     "vehiculo":"BMW i4 eDrive40",
     "electrolinera":"EDS Terpel Piedecuesta",
     "bateria_al_recargar":17.5,
-    "numero_recorrido":149
-  },
-  {
-    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
-    "electrolinera":"CC la Florida",
-    "bateria_al_recargar":19.7,
-    "numero_recorrido":163
-  },
-  {
-    "vehiculo":"BMW i4 eDrive40",
-    "electrolinera":"Homecenter",
-    "bateria_al_recargar":18.1,
-    "numero_recorrido":187
-  },
-  {
-    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
-    "electrolinera":"CC Cacique",
-    "bateria_al_recargar":19.3,
-    "numero_recorrido":188
-  },
-  {
-    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
-    "electrolinera":"EDS Terpel Piedecuesta",
-    "bateria_al_recargar":16.4,
-    "numero_recorrido":208
-  },
-  {
-    "vehiculo":"BMW i4 eDrive40",
-    "electrolinera":"EDS Terpel Piedecuesta",
-    "bateria_al_recargar":18.0,
-    "numero_recorrido":220
-  },
-  {
-    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
-    "electrolinera":"Homecenter",
-    "bateria_al_recargar":18.4,
-    "numero_recorrido":228
-  },
-  {
-    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
-    "electrolinera":"\u00c9xito de la Rosita",
-    "bateria_al_recargar":19.7,
-    "numero_recorrido":252
-  },
-  {
-    "vehiculo":"BMW i4 eDrive40",
-    "electrolinera":"Promotores del Oriente",
-    "bateria_al_recargar":19.2,
-    "numero_recorrido":256
-  },
-  {
-    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
-    "electrolinera":"CC Cacique",
-    "bateria_al_recargar":18.1,
-    "numero_recorrido":276
-  },
-  {
-    "vehiculo":"BMW i4 eDrive40",
-    "electrolinera":"\u00c9xito de la Rosita",
-    "bateria_al_recargar":17.8,
-    "numero_recorrido":291
-  },
-  {
-    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
-    "electrolinera":"Promotores del Oriente",
-    "bateria_al_recargar":19.1,
-    "numero_recorrido":297
-  },
-  {
-    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
-    "electrolinera":"EDS Terpel Piedecuesta",
-    "bateria_al_recargar":16.7,
-    "numero_recorrido":320
-  },
-  {
-    "vehiculo":"BMW i4 eDrive40",
-    "electrolinera":"\u00c9xito de la Rosita",
-    "bateria_al_recargar":19.4,
-    "numero_recorrido":326
-  },
-  {
-    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
-    "electrolinera":"Homecenter",
-    "bateria_al_recargar":18.5,
-    "numero_recorrido":344
-  },
-  {
-    "vehiculo":"BMW i4 eDrive40",
-    "electrolinera":"Homecenter",
-    "bateria_al_recargar":19.9,
-    "numero_recorrido":368
-  },
-  {
-    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
-    "electrolinera":"Homecenter",
-    "bateria_al_recargar":19.7,
-    "numero_recorrido":372
-  },
-  {
-    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
-    "electrolinera":"EDS Terpel Piedecuesta",
-    "bateria_al_recargar":16.7,
-    "numero_recorrido":395
-  },
-  {
-    "vehiculo":"BMW i4 eDrive40",
-    "electrolinera":"CC la Florida",
-    "bateria_al_recargar":19.2,
-    "numero_recorrido":405
-  },
-  {
-    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
-    "electrolinera":"Homecenter",
-    "bateria_al_recargar":19.2,
-    "numero_recorrido":421
-  },
-  {
-    "vehiculo":"BMW i4 eDrive40",
-    "electrolinera":"Homecenter",
-    "bateria_al_recargar":19.2,
-    "numero_recorrido":443
-  },
-  {
-    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
-    "electrolinera":"CC Cacique",
-    "bateria_al_recargar":19.5,
-    "numero_recorrido":444
-  },
-  {
-    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
-    "electrolinera":"Promotores del Oriente",
-    "bateria_al_recargar":19.4,
-    "numero_recorrido":472
-  },
-  {
-    "vehiculo":"BMW i4 eDrive40",
-    "electrolinera":"Homecenter",
-    "bateria_al_recargar":17.2,
-    "numero_recorrido":483
-  },
-  {
-    "vehiculo":"Nissan LEAF Standard Range 52 kWh",
-    "electrolinera":"Homecenter",
-    "bateria_al_recargar":18.7,
-    "numero_recorrido":494
+    "numero_recorrido":1000
   }
 ]
