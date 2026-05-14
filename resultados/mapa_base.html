@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_f3a6f300f670de5ea6d645f5f80a7ea4 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_f3a6f300f670de5ea6d645f5f80a7ea4" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_f3a6f300f670de5ea6d645f5f80a7ea4 = L.map(
+                "map_f3a6f300f670de5ea6d645f5f80a7ea4",
+                {
+                    center: [7.1254, -73.1198],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 13,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_c92aef75dedcfcbc50e63a7b054c5078 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_c92aef75dedcfcbc50e63a7b054c5078.addTo(map_f3a6f300f670de5ea6d645f5f80a7ea4);
+        
+    
+            var marker_1506ae29fab0458b7cc50ef698df31a2 = L.marker(
+                [7.1166407, -73.120127],
+                {
+}
+            ).addTo(map_f3a6f300f670de5ea6d645f5f80a7ea4);
+        
+    
+            var icon_a9344d47b3fa68a13482ea9585892e70 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "lightgreen",
+  "iconColor": "white",
+  "icon": "bolt",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_1506ae29fab0458b7cc50ef698df31a2.bindTooltip(
+                `<div>
+                     Homecenter
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_1506ae29fab0458b7cc50ef698df31a2.setIcon(icon_a9344d47b3fa68a13482ea9585892e70);
+            
+    
+            var marker_e0d6901a55368d820e25203416bc4d7b = L.marker(
+                [7.115420640034982, -73.10766131582209],
+                {
+}
+            ).addTo(map_f3a6f300f670de5ea6d645f5f80a7ea4);
+        
+    
+            var icon_5704dc1442545db9456e4b455f08c836 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "bolt",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_e0d6901a55368d820e25203416bc4d7b.bindTooltip(
+                `<div>
+                     CC Quinta Etapa
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e0d6901a55368d820e25203416bc4d7b.setIcon(icon_5704dc1442545db9456e4b455f08c836);
+            
+    
+            var marker_98a586733ad0204e9cc5daebde35e22b = L.marker(
+                [7.09929060866683, -73.10713409909908],
+                {
+}
+            ).addTo(map_f3a6f300f670de5ea6d645f5f80a7ea4);
+        
+    
+            var icon_dd4d25703d83b5961a920302f0dfd4dd = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "lightgreen",
+  "iconColor": "white",
+  "icon": "bolt",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_98a586733ad0204e9cc5daebde35e22b.bindTooltip(
+                `<div>
+                     CC Cacique
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_98a586733ad0204e9cc5daebde35e22b.setIcon(icon_dd4d25703d83b5961a920302f0dfd4dd);
+            
+    
+            var marker_3c97dc2d01d1ce43c98392eb78493a34 = L.marker(
+                [7.0708246569704745, -73.10626505872307],
+                {
+}
+            ).addTo(map_f3a6f300f670de5ea6d645f5f80a7ea4);
+        
+    
+            var icon_df2c42b804e2bad842e7d9ce3a18cfa0 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "lightgreen",
+  "iconColor": "white",
+  "icon": "bolt",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_3c97dc2d01d1ce43c98392eb78493a34.bindTooltip(
+                `<div>
+                     CC Canaveral
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_3c97dc2d01d1ce43c98392eb78493a34.setIcon(icon_df2c42b804e2bad842e7d9ce3a18cfa0);
+            
+    
+            var marker_ca8224ae124277ded69fd9e77ee25960 = L.marker(
+                [6.9980135, -73.0521321],
+                {
+}
+            ).addTo(map_f3a6f300f670de5ea6d645f5f80a7ea4);
+        
+    
+            var icon_221144d0595f99bc2c3001c2a2fecbce = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "lightgreen",
+  "iconColor": "white",
+  "icon": "bolt",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_ca8224ae124277ded69fd9e77ee25960.bindTooltip(
+                `<div>
+                     EDS Terpel Piedecuesta
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ca8224ae124277ded69fd9e77ee25960.setIcon(icon_221144d0595f99bc2c3001c2a2fecbce);
+            
+    
+            var marker_5fa3af493fc770459150236523f5ff50 = L.marker(
+                [7.113356086941692, -73.12313842061032],
+                {
+}
+            ).addTo(map_f3a6f300f670de5ea6d645f5f80a7ea4);
+        
+    
+            var icon_b5493884eac7d33e50b0a13684b111a0 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "bolt",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_5fa3af493fc770459150236523f5ff50.bindTooltip(
+                `<div>
+                     Éxito de la Rosita
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_5fa3af493fc770459150236523f5ff50.setIcon(icon_b5493884eac7d33e50b0a13684b111a0);
+            
+    
+            var marker_96808cf290144113145c2434a0e7035f = L.marker(
+                [7.069603582131851, -73.10528766987646],
+                {
+}
+            ).addTo(map_f3a6f300f670de5ea6d645f5f80a7ea4);
+        
+    
+            var icon_76f3b536d842f7112b7095b4bd6ed2b5 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "bolt",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_96808cf290144113145c2434a0e7035f.bindTooltip(
+                `<div>
+                     CC la Florida
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_96808cf290144113145c2434a0e7035f.setIcon(icon_76f3b536d842f7112b7095b4bd6ed2b5);
+            
+    
+            var marker_aafe5e01d00a4e32aa9ab15863d9ef09 = L.marker(
+                [7.085365674999598, -73.16469082573603],
+                {
+}
+            ).addTo(map_f3a6f300f670de5ea6d645f5f80a7ea4);
+        
+    
+            var icon_7c6831f80a971cb3f49ffc57a22d94dc = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "lightgreen",
+  "iconColor": "white",
+  "icon": "bolt",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_aafe5e01d00a4e32aa9ab15863d9ef09.bindTooltip(
+                `<div>
+                     Promotores del Oriente
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_aafe5e01d00a4e32aa9ab15863d9ef09.setIcon(icon_7c6831f80a971cb3f49ffc57a22d94dc);
+            
+    
+            var marker_9b164b64b0abe905b447081d25036430 = L.marker(
+                [7.138852006758697, -73.12027425434756],
+                {
+}
+            ).addTo(map_f3a6f300f670de5ea6d645f5f80a7ea4);
+        
+    
+            var icon_291ef587f8ab7c5194702677b635473e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_9b164b64b0abe905b447081d25036430.bindTooltip(
+                `<div>
+                     UIS Campus Central
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_9b164b64b0abe905b447081d25036430.setIcon(icon_291ef587f8ab7c5194702677b635473e);
+            
+    
+            var marker_c0ef5508cde5b6923b8038be1d044ba2 = L.marker(
+                [7.061666046126296, -73.0885503348499],
+                {
+}
+            ).addTo(map_f3a6f300f670de5ea6d645f5f80a7ea4);
+        
+    
+            var icon_aefd13b30fa08ee424c755d04efc82c4 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_c0ef5508cde5b6923b8038be1d044ba2.bindTooltip(
+                `<div>
+                     UIS Campus Florida
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c0ef5508cde5b6923b8038be1d044ba2.setIcon(icon_aefd13b30fa08ee424c755d04efc82c4);
+            
+    
+            var marker_23a6ce019b26aeb465af0b59f345e1cd = L.marker(
+                [6.994686396119995, -73.06667821875594],
+                {
+}
+            ).addTo(map_f3a6f300f670de5ea6d645f5f80a7ea4);
+        
+    
+            var icon_ab2d5b3a20f593961de9730f527703d8 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_23a6ce019b26aeb465af0b59f345e1cd.bindTooltip(
+                `<div>
+                     UIS Guatiguará Piedecuesta
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_23a6ce019b26aeb465af0b59f345e1cd.setIcon(icon_ab2d5b3a20f593961de9730f527703d8);
+            
+    
+            var marker_44965da35d60c4b665fa848f2b246737 = L.marker(
+                [7.119742214194392, -73.12309354517878],
+                {
+}
+            ).addTo(map_f3a6f300f670de5ea6d645f5f80a7ea4);
+        
+    
+            var icon_3ccd6411a52701959380444add83fc49 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_44965da35d60c4b665fa848f2b246737.bindTooltip(
+                `<div>
+                     UIS Bucarica
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_44965da35d60c4b665fa848f2b246737.setIcon(icon_3ccd6411a52701959380444add83fc49);
+            
+    
+            var marker_51c310373d7ea81debabec0be8c5e8fc = L.marker(
+                [7.082563259306312, -73.15409157603568],
+                {
+}
+            ).addTo(map_f3a6f300f670de5ea6d645f5f80a7ea4);
+        
+    
+            var icon_4f903cbc7e21012ed1d0b013eb206e4a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_51c310373d7ea81debabec0be8c5e8fc.bindTooltip(
+                `<div>
+                     Centro de Exposiciones Cenfer 
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_51c310373d7ea81debabec0be8c5e8fc.setIcon(icon_4f903cbc7e21012ed1d0b013eb206e4a);
+            
+    
+            var marker_bc47aade146ef2a7cadf7a1613c307d2 = L.marker(
+                [7.117007936115003, -73.10454110673093],
+                {
+}
+            ).addTo(map_f3a6f300f670de5ea6d645f5f80a7ea4);
+        
+    
+            var icon_5eac994dd1cde16f9abc7757fb9723bb = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_bc47aade146ef2a7cadf7a1613c307d2.bindTooltip(
+                `<div>
+                     UNAB
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_bc47aade146ef2a7cadf7a1613c307d2.setIcon(icon_5eac994dd1cde16f9abc7757fb9723bb);
+            
+    
+            var marker_1ed2600bb9461a28b6de546e1953d699 = L.marker(
+                [7.1051693758673045, -73.1238175281811],
+                {
+}
+            ).addTo(map_f3a6f300f670de5ea6d645f5f80a7ea4);
+        
+    
+            var icon_315ef4b12bb488866163a147cbb4aaf1 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_1ed2600bb9461a28b6de546e1953d699.bindTooltip(
+                `<div>
+                     UTS
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_1ed2600bb9461a28b6de546e1953d699.setIcon(icon_315ef4b12bb488866163a147cbb4aaf1);
+            
+    
+            var marker_e00ae5b56df8dca7e8d204b37db02c6b = L.marker(
+                [7.038541882742454, -73.07218033557736],
+                {
+}
+            ).addTo(map_f3a6f300f670de5ea6d645f5f80a7ea4);
+        
+    
+            var icon_de206b2c0d0837ae83d6cce9f9521616 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_e00ae5b56df8dca7e8d204b37db02c6b.bindTooltip(
+                `<div>
+                     UPB
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e00ae5b56df8dca7e8d204b37db02c6b.setIcon(icon_de206b2c0d0837ae83d6cce9f9521616);
+            
+    
+            var marker_8a27f2c5f3793431f16fd15684430c1c = L.marker(
+                [7.065618104019919, -73.12805723099473],
+                {
+}
+            ).addTo(map_f3a6f300f670de5ea6d645f5f80a7ea4);
+        
+    
+            var icon_06a3381643fe048b2006773e586aaf08 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_8a27f2c5f3793431f16fd15684430c1c.bindTooltip(
+                `<div>
+                     PTAR RIO FRIO
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8a27f2c5f3793431f16fd15684430c1c.setIcon(icon_06a3381643fe048b2006773e586aaf08);
+            
+    
+            var marker_19d62775d43fc31e40a01dae5b455da5 = L.marker(
+                [6.976060516671348, -73.04155682203246],
+                {
+}
+            ).addTo(map_f3a6f300f670de5ea6d645f5f80a7ea4);
+        
+    
+            var icon_e4fcc0c8b3d248086f144e76ac2da4ba = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_19d62775d43fc31e40a01dae5b455da5.bindTooltip(
+                `<div>
+                     Hacienda Catay
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_19d62775d43fc31e40a01dae5b455da5.setIcon(icon_e4fcc0c8b3d248086f144e76ac2da4ba);
+            
+    
+            map_f3a6f300f670de5ea6d645f5f80a7ea4.fitBounds(
+                [[6.9980135, -73.16469082573603], [7.138852006758697, -73.04155682203246]],
+                {}
+            );
+        
+</script>
+</html>
