@@ -6,6 +6,7 @@ import random # Para seleccionar puntos de referencia aleatorios
 import osmnx as ox # Para trabajar con datos de OpenStreetMap y grafo
 from grafo import electrolinera_mas_cercana # Importamos la funcion del grafo para encontrar la electrolinera mas cercana
 from grafo import cargar_grafo # Importamos la funcion para cargar el grafo
+from grafo import RUTA_ELECTROLINERAS_NODOS, RUTA_PUNTOS_NODOS
 
 
 # ==============================================================
@@ -75,13 +76,10 @@ def simular_recorridos(G=None):
 
     # 2. Cargar los datos de los puntos de referencia y las electrolinera
 
-    ruta_puntos = os.path.join(os.path.dirname(__file__), "../datos/puntos_con_nodos.csv")
-    ruta_electrolineras = os.path.join(os.path.dirname(__file__), "../datos/electrolineras_con_nodos.csv")
-
     #Convertimos los DataFrames a listas de diccionarios para facilitar su uso en la simulación
 
-    puntos = pd.read_csv(ruta_puntos).to_dict(orient="records") #Tenemos una lista de diccionarios con los datos de cada punto de referencia, incluyendo su nodo en el grafo del mapa
-    electrolineras = pd.read_csv(ruta_electrolineras).to_dict(orient="records") #Tenemos una lista de diccionarios con los datos de cada electrolinera, incluyendo su nodo en el grafo 
+    puntos = pd.read_csv(RUTA_PUNTOS_NODOS).to_dict(orient="records") #Tenemos una lista de diccionarios con los datos de cada punto de referencia, incluyendo su nodo en el grafo del mapa
+    electrolineras = pd.read_csv(RUTA_ELECTROLINERAS_NODOS).to_dict(orient="records") #Tenemos una lista de diccionarios con los datos de cada electrolinera, incluyendo su nodo en el grafo
 
     # 3. Cargar grafo
 

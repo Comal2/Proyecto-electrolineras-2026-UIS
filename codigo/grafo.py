@@ -40,6 +40,8 @@ RUTA_GRAPHML        = os.path.join(DIRECTORIO_PROYECTO, "datos", "area_metropoli
 RUTA_ELECTROLINERAS = os.path.join(DIRECTORIO_PROYECTO, "datos", "electrolineras.csv")
 RUTA_ESTADISTICAS   = os.path.join(DIRECTORIO_PROYECTO, "datos", "estadisticas.xlsx")
 RUTA_PUNTOS         = os.path.join(DIRECTORIO_PROYECTO, "datos", "puntos_referencia.csv")
+RUTA_ELECTROLINERAS_NODOS = os.path.join(DIRECTORIO_PROYECTO, "datos", "electrolineras_con_nodos.csv")
+RUTA_PUNTOS_NODOS         = os.path.join(DIRECTORIO_PROYECTO, "datos", "puntos_con_nodos.csv")
 
 # ==============================================================
 

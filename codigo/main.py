@@ -3,7 +3,11 @@ import pandas as pd
 import os
 import json
 from modelo_ml import cargar_datos, entrenar_modelo, predecir_ubicaciones
-from grafo import cargar_grafo, RUTA_GRAPHML
+from grafo import (
+    cargar_grafo, procesar_electrolineras, procesar_puntos,
+    RUTA_GRAPHML, RUTA_ELECTROLINERAS, RUTA_PUNTOS,
+    RUTA_ELECTROLINERAS_NODOS, RUTA_PUNTOS_NODOS,
+)
 from mapa import generar_mapa_con_demanda
 from simulacion import simular_recorridos
 
@@ -50,7 +54,13 @@ while True:
                             grafo_area = cargar_grafo(RUTA_GRAPHML)
                             if grafo_area is not None:                 #validacion del mapa
                                 print("mapa listo para usar :) ")
-                            
+                                
+                                if not os.path.exists(RUTA_ELECTROLINERAS_NODOS):
+                                    procesar_electrolineras(grafo_area, RUTA_ELECTROLINERAS).to_csv(RUTA_ELECTROLINERAS_NODOS, index=False)
+
+                                if not os.path.exists(RUTA_PUNTOS_NODOS):
+                                    procesar_puntos(grafo_area, RUTA_PUNTOS).to_csv(RUTA_PUNTOS_NODOS, index=False)
+
                         case 2:
                             if grafo_area is None:                      
                                 print("ERROR. (primero selecciones la opcion 1)")
@@ -73,8 +83,7 @@ while True:
             if grafo_area is None:
                 print("ERROR. (primero selecciones la opcion 1)")
             else:
-                ruta_estadisticas = os.path.join(DIRECTORIO_MAIN, 'datos', 'estadisticas.csv' )
-
+                ruta_estadisticas = os.path.join(DIRECTORIO_MAIN, '..', 'datos', 'estadisticas.csv')
                 try:
                     df = pd.read_csv(ruta_estadisticas)
                     print(df.to_string()) 
