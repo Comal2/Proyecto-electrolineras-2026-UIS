@@ -95,8 +95,8 @@ if __name__ == "__main__":
         print(f"Modelo entrenado. Precisión: {metrics['accuracy']:.2f}")
 
         ejemplos = [
-            {"vehiculo": "Baja", "bateria_al_recargar": 25, "numero_recorrido": 5},
-            {"vehiculo": "Media", "bateria_al_recargar": 10, "numero_recorrido": 8},
+            {"vehiculo": "baja", "bateria_al_recargar": 25, "numero_recorrido": 5},
+            {"vehiculo": "alta", "bateria_al_recargar": 10, "numero_recorrido": 8},
         ]
         resultados = predecir_ubicaciones(modelo, encoder, scaler, features, ejemplos)
 
