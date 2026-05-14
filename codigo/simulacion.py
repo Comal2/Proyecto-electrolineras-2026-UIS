@@ -1,4 +1,3 @@
-
 import json  # Leer el archivo json
 import os    # Con esto manejamos las carpetas y rutas sin importar donde se ejecute
 import pandas as pd # Leer los archivos csv
@@ -7,8 +6,6 @@ import random # Para seleccionar puntos de referencia aleatorios
 import osmnx as ox # Para trabajar con datos de OpenStreetMap y grafo
 from grafo import electrolinera_mas_cercana # Importamos la funcion del grafo para encontrar la electrolinera mas cercana
 from grafo import cargar_grafo # Importamos la funcion para cargar el grafo
-
-
 
 
 # ==============================================================
@@ -61,8 +58,8 @@ def pedir_numero_recorridos():
         except ValueError:
             print("Error: ingresa solo números enteros.")
 
-if __name__ == "__main__":
-
+def simular_recorridos():
+ 
     # ==============================================================
     #                CARGA DE DATOS
     # ==============================================================
@@ -120,14 +117,14 @@ if __name__ == "__main__":
         while destino == origen:                #Si el destino es igual al origen, repetimos el proceso hasta que sean diferentes para evitar que el vehículo recorra una distancia de 0 km
             destino = random.choice(puntos)     #Seleccionamos otro punto de destino aleatorio de la lista de puntos
 
-        distancia_m = nx.shortest_path_length(G, source=origen["nodo_mapa"], target=destino["nodo_mapa"], weight='length')/1000 #Calculamos la distancia en kilómetros entre el origen y el destino utilizando el grafo del mapa y la función "shortest_path_length" de NetworkX, que encuentra la ruta más corta entre dos nodos en el grafo. Dividimos por 1000 para convertir de metros a kilómetros
+        distancia_m = nx.shortest_path_length(G, source=int(origen["nodo_mapa"]), target=int(destino["nodo_mapa"]), weight='length') / 1000
 
         for auto in lista_vehiculos:    #Iteramos sobre cada vehículo en la lista de vehículos y llamamos al método "consumir" para simular el consumo de batería durante el recorrido. Si el método devuelve True, significa que la batería está por debajo del 20% y el vehículo necesita recargar, por lo que llamamos al método "recargar".
             necesita_recarga = auto.consumir(distancia_m)   #Llamamos al método "consumir" del vehículo para simular el consumo de batería durante el recorrido. El método devuelve True si la batería está por debajo del 20% después de consumir, lo que indica que el vehículo necesita recargar. Guardamos este resultado en la variable "necesita_recarga" para usarlo en la siguiente parte de la lógica de la simulación.
     
             if necesita_recarga:
 
-                electrolinera = electrolinera_mas_cercana(G, destino["nodo_mapa"])  #Si el vehículo necesita recargar, utilizamos la función "electrolinera_mas_cercana" para encontrar la electrolinera más cercana al destino del recorrido, utilizando el grafo del mapa y el nodo del destino como referencia
+                electrolinera = electrolinera_mas_cercana(G, int(destino["nodo_mapa"]))  #Si el vehículo necesita recargar, utilizamos la función "electrolinera_mas_cercana" para encontrar la electrolinera más cercana al destino del recorrido, utilizando el grafo del mapa y el nodo del destino como referencia
                 historial_recargas.append({
                         "vehiculo": auto.modelo,
                         "electrolinera": electrolinera["nombre"],
@@ -147,3 +144,6 @@ if __name__ == "__main__":
     df.to_csv(os.path.join(ruta_estadisticas, "estadisticas.csv"), index=False)
     df.to_json(os.path.join(ruta_estadisticas, "estadisticas.json"), orient="records", indent=2)
     df.to_excel(os.path.join(ruta_estadisticas, "estadisticas.xlsx"), index=False)
+   
+if __name__ == "__main__":
+    simular_recorridos()
