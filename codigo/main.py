@@ -5,7 +5,7 @@ import json
 from modelo_ml import cargar_datos, entrenar_modelo, predecir_ubicaciones
 from grafo import cargar_grafo, RUTA_GRAPHML
 from mapa import generar_mapa_con_demanda
-#from simulacion import simular_recorridos
+from simulacion import simular_recorridos
 
 DIRECTORIO_MAIN = os.path.dirname(os.path.abspath(__file__))
 
