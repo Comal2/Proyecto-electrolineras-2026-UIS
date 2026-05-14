@@ -1,9 +1,11 @@
 """main/menu"""
 import pandas as pd
 import os
-from modelo_ml import cargar_datos, entrenar_modelo, predecir_zonas
-from grafo import cargar_grafo, RUTA_GRAPHML  
-#from simulacion import simular_recorridos
+import json
+from modelo_ml import cargar_datos, entrenar_modelo, predecir_ubicaciones
+from grafo import cargar_grafo, RUTA_GRAPHML
+from mapa import generar_mapa_con_demanda
+from simulacion import simular_recorridos
 
 DIRECTORIO_MAIN = os.path.dirname(os.path.abspath(__file__))
 
@@ -82,18 +84,56 @@ while True:
             
         case 3:
             print("\n=== Modelo para nuevas Electrolineras ===")
-            if grafo_area is None:
-                print("ERROR. (primero seleccione la opcion 1)")   
+            try:
+                df = cargar_datos()
+            except FileNotFoundError:
+                print("ERROR: no se encontró el archivo de estadísticas. Primero simula recorridos.")
+            except Exception as err:
+                print(f"ERROR al cargar datos: {err}")
             else:
-                
-                try:
-                    cargar_datos(ruta_estadisticas)
-                    entrenar_modelo(df)
-                    predecir_zonas(ruta_estadisticas)
-                except FileNotFoundError:
-                    print("ERROR : no se encontro el archivo, primero simule")
+                if df is None or df.empty:
+                    print("El archivo de estadísticas existe pero no contiene registros.")
+                else:
+                    try:
+                        modelo, encoder, scaler, metrics, features = entrenar_modelo(df)
+                    except Exception as err:
+                        print(f"ERROR al entrenar el modelo: {err}")
+                    else:
+                        print(f"Modelo entrenado con {len(df)} filas.")
+                        print(f"Precisión de prueba: {metrics['accuracy']:.2f}")
+                        print(metrics['report'])
 
-                pass
+                        ejemplos = [
+                            {"vehiculo": "Baja", "bateria_al_recargar": 25, "numero_recorrido": 5},
+                            {"vehiculo": "Media", "bateria_al_recargar": 10, "numero_recorrido": 8},
+                        ]
+                        resultados = predecir_ubicaciones(modelo, encoder, scaler, features, ejemplos)
+
+                        if resultados:
+                            print("\nPredicciones de ejemplo:")
+                            for idx, fila in enumerate(resultados["predicciones"], start=1):
+                                print(f"Caso {idx}: {fila['input']}")
+                                print(f"  Predicción principal: {fila['prediccion_principal']['electrolinera']} ({fila['prediccion_principal']['probabilidad']:.2f})")
+                                print("  Top 3 candidatos:")
+                                for candidato in fila['top_5'][:3]:
+                                    print(f"    - {candidato['electrolinera']}: {candidato['probabilidad']:.2f}")
+
+                            print("\nDemanda agregada por electrolinera:")
+                            for candidato in resultados['demanda_agregada'][:5]:
+                                print(f"  - {candidato['electrolinera']}: {candidato['demanda']:.2f}")
+
+                            # Guardar predicciones para el mapa
+                            ruta_predicciones = os.path.join(DIRECTORIO_MAIN, os.pardir, 'datos', 'predicciones_demanda.json')
+                            with open(ruta_predicciones, 'w') as f:
+                                json.dump(resultados["demanda_agregada"], f, indent=2)
+                            print(f"\nPredicciones guardadas en: {ruta_predicciones}")
+
+                            # Generar mapa con demanda
+                            print("\nGenerando mapa con zonas de demanda...")
+                            ruta_mapa = generar_mapa_con_demanda()
+                            print(f"Mapa actualizado: {ruta_mapa}")
+                            print("Abre el archivo HTML en tu navegador para ver las zonas de demanda marcadas con círculos.")
+        
         case 4:
             print("\nSaliendo... ")
             break 

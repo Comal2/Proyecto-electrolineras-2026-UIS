@@ -1,99 +1,119 @@
-"""modelo_ml.py"""
-import os                   #lib para el manejo de archivos
-import pandas as pd         #lib para el analisis y manejos de los datos
-from sklearn.ensemble import RandomForestClassifier     #nuestro algoritmo de machine learning
-from sklearn.preprocessing import LabelEncoder          #convertir el texto a numeros para nuestro modelo
+import os
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, classification_report
+import json
 
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+DATA_FILE = os.path.join(BASE_DIR, "datos", "estadisticas.csv")
 
-DIRECTORIO_ML =  os.path.dirname(os.path.abspath(__file__))
-
-def cargar_datos(ruta_csv):
-    """Carga las estadísticas generadas por la simulación."""
-
-    print(f"[cargar_datos] Leyendo archivo: {ruta_csv}")
-
-    #ruta de los datos a utilizar (ESTADISTICAS)
-    ruta_csv = os.path.join(DIRECTORIO_ML, 'datos', 'estadisticas.csv')
-
-    #verificar que el csv si exista
-    if not os.path.exists(ruta_csv):
-        raise FileNotFoundError(f"no se encontro el archivo {ruta_csv}")
-    df = pd.read_csv(ruta_csv) #leemos el archivo
-    
-    #print(df.head()) #vemos como es el dataframe cargadp
-    print(f"[cargar_datos] filas cargadas: {len(df)}")
-    #filas encontradas
+def cargar_datos(ruta=None):
+    if ruta is None:
+        ruta = DATA_FILE
+    df = pd.read_csv(ruta)
     return df
 
-def prepocesar_datos(df):
-    """Limpieza y Transformacion de los datos"""
-    print("Iniciando preprocesamiento...")
-    df = df.copy()  
-    #copia el dataframe del csv para no cambiar el origina
-
-    df= df.dropna(subset=["vehiculo", "bateria_al_recargar", "km_recorridos", "zona"])
-    #limpia los datos del dataset
-
-    df["bateria_al_recargar"] = df["bateria_al_recargar"].astype(float)
-    df["km_recorridos"] = df["km_recorridos"].astype(float)
-    #tomas estos frames y los convierte el decimales(float)
-
-    df = pd.get_dummies(df, columns = ["vehiculo"], prefix = "vehiculo")
-    #convierte la col de los vehiculos en col numerica
-    
-    #print(df.head()) #prueba para ver como cambia el dataframe
-    return df
-
-def entrenar_modelo(df):
-    """Entrena el modelo con los datos de uso de electrolineras."""
+def preparar_datos(df):
     df = df.copy()
+    df.columns = [
+        c.strip().lower().replace(" ", "_").replace("(", "").replace(")", "")
+        for c in df.columns
+    ]
+
+    df = df.dropna(subset=["vehiculo", "electrolinera", "bateria_al_recargar", "numero_recorrido"])
+    df["bateria_al_recargar"] = pd.to_numeric(df["bateria_al_recargar"], errors="coerce")
+    df["numero_recorrido"] = pd.to_numeric(df["numero_recorrido"], errors="coerce")
+    df = df.dropna(subset=["bateria_al_recargar", "numero_recorrido"])
+    df["vehiculo"] = df["vehiculo"].str.strip().str.replace(" ", "_")
+
+    X = pd.get_dummies(df[["vehiculo", "bateria_al_recargar", "numero_recorrido"]], columns=["vehiculo"])
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(X)
+    X_scaled = pd.DataFrame(X_scaled, columns=X.columns)
 
     encoder = LabelEncoder()
-    #codificador de los datos (este los vuelve numericos)
+    y = encoder.fit_transform(df["electrolinera"].astype(str))
 
-    df["zona_encoded"] = encoder.fit_transform(df["zona"])
-    df_pre = prepocesar_datos(df)
+    return X_scaled, y, encoder, scaler
 
-    caracteristicas = [c for c in df_pre.columns if c.startswith("vehiculo_") or c in ["bateria_al_recargar", "km_recorridos"]]
-    X = df_pre[caracteristicas]
-    y = df_pre["zona_encoded"]
+def entrenar_modelo(df):
+    X, y, encoder, scaler = preparar_datos(df)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
     modelo = RandomForestClassifier(n_estimators=100, random_state=42)
-    modelo.fit(X, y)
-    
-    return modelo, encoder
+    modelo.fit(X_train, y_train)
 
+    y_pred = modelo.predict(X_test)
+    accuracy = accuracy_score(y_test, y_pred)
+    report = classification_report(y_test, y_pred, target_names=encoder.classes_, output_dict=True)
 
-def predecir_zonas(modelo, datos_nuevos):
-    """Predice qué zonas necesitan nuevas electrolineras."""
+    return modelo, encoder, scaler, {"accuracy": accuracy, "report": report}, X.columns.tolist()
 
-    df = pd.DataFrame(datos_nuevos)
+def predecir_ubicaciones(modelo, encoder, scaler, feature_names, datos_nuevos):
+    df_nuevos = pd.DataFrame(datos_nuevos)
+    df_nuevos["vehiculo"] = df_nuevos["vehiculo"].str.strip().str.replace(" ", "_")
+    df_nuevos = pd.get_dummies(df_nuevos, columns=["vehiculo"], prefix="vehiculo", dtype=int)
 
-    df["bateria_al_recargar"] = df["bateria_al_recargar"].astype(float)
-    df["km_recorridos"] = df["km_recorridos"].astype(float)
-    df = pd.get_dummies(df, columns = ["vehiculo"], prefix = "vehiculo")
+    for col in feature_names:
+        if col not in df_nuevos.columns:
+            df_nuevos[col] = 0
+    df_nuevos = df_nuevos[feature_names]
 
-    feature_names = getattr(modelo, "feature_names_in_", df.columns)
-    for columna in [c for c in feature_names if c not in df.columns]:
-        df[columna] = 0
-    df = df[feature_names]
+    # Escalar los datos nuevos
+    df_nuevos_scaled = scaler.transform(df_nuevos)
+    df_nuevos_scaled = pd.DataFrame(df_nuevos_scaled, columns=feature_names)
 
-    probabilidades = modelo.predict_proba(df)
-    medias = probabilidades.means(axis=0)
-    orden = medias.argsort()[::-1]
-    zonas = encoder.inverse_transform(orden)
+    probs = modelo.predict_proba(df_nuevos_scaled)
+    resultados = []
+    for i, fila in enumerate(probs):
+        orden = fila.argsort()[::-1]
+        top = [{"electrolinera": encoder.classes_[idx], "probabilidad": float(fila[idx])} for idx in orden]
+        resultados.append({
+            "input": datos_nuevos[i],
+            "prediccion_principal": top[0],
+            "top_5": top[:5]
+        })
 
-    return [(zona, medias[idx])for idx, zona in zip(orden, zonas)]
+    demanda = probs.mean(axis=0)
+    demanda_ordenada = sorted(
+        [{"electrolinera": encoder.classes_[i], "demanda": float(demanda[i])} for i in range(len(demanda))],
+        key=lambda x: x["demanda"],
+        reverse=True
+    )
+
+    return {"predicciones": resultados, "demanda_agregada": demanda_ordenada}
 
 if __name__ == "__main__":
+    print("Probando el modelo de ML...")
+    try:
+        df = cargar_datos()
+        print(f"Datos cargados: {len(df)} filas")
 
-    ruta_csv = os.path.join(DIRECTORIO_ML, 'datos', 'estadisticas.csv')
-    df = cargar_datos(ruta_csv)
-    modelo, encoder = entrenar_modelo(df)
+        modelo, encoder, scaler, metrics, features = entrenar_modelo(df)
+        print(f"Modelo entrenado. Precisión: {metrics['accuracy']:.2f}")
 
-    ejemplos = [
-        {"vehiculo": "Baja", "bateria_al_recargar": 25, "km_recorridos": 75},
-        {"vehiculo": "Media", "bateria_al_recargar": 10, "km_recorridos": 95},
-    ]
-    predicciones = predecir_zonas(modelo, encoder, ejemplos)
-    print("Zonas sugeridas:", predicciones)
+        ejemplos = [
+            {"vehiculo": "Baja", "bateria_al_recargar": 25, "numero_recorrido": 5},
+            {"vehiculo": "Media", "bateria_al_recargar": 10, "numero_recorrido": 8},
+        ]
+        resultados = predecir_ubicaciones(modelo, encoder, scaler, features, ejemplos)
+
+        print("\nPredicciones de ejemplo:")
+        for idx, fila in enumerate(resultados["predicciones"], start=1):
+            print(f"Caso {idx}: {fila['input']}")
+            print(f"  Predicción principal: {fila['prediccion_principal']['electrolinera']} ({fila['prediccion_principal']['probabilidad']:.2f})")
+
+        print("\nDemanda agregada por electrolinera:")
+        for candidato in resultados['demanda_agregada'][:5]:
+            print(f"  - {candidato['electrolinera']}: {candidato['demanda']:.2f}")
+
+        # Guardar predicciones
+        ruta_predicciones = os.path.join(BASE_DIR, "datos", "predicciones_demanda.json")
+        with open(ruta_predicciones, 'w') as f:
+            json.dump(resultados["demanda_agregada"], f, indent=2)
+        print(f"\nPredicciones guardadas en: {ruta_predicciones}")
+
+    except Exception as e:
+        print(f"Error: {e}")
