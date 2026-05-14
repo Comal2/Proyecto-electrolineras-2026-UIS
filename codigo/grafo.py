@@ -254,6 +254,24 @@ def electrolinera_mas_cercana(grafo, nodo_origen):
     print(f"   Distancia  : {mejor['distancia_m']:.1f} m")
     return mejor
 
+def distancia_entre_nodos(grafo, nodo_a, nodo_b):
+    """Devuelve la distancia en metros por carretera entre dos nodos del grafo.
+    
+    Usa Dijkstra (weight='length') igual que electrolinera_mas_cercana().
+    Retorna float con los metros, o None si no hay ruta entre los nodos.
+    """
+    try:
+        # shortest_path_length calcula la suma de los 'length' de cada calle
+        # en el camino más corto de nodo_a a nodo_b (Dijkstra internamente).
+        return nx.shortest_path_length(grafo, nodo_a, nodo_b, weight='length')
+    
+    except nx.NetworkXNoPath:
+        # No existe ningún camino entre los dos nodos (zonas desconectadas).
+        return None
+    
+    except nx.NodeNotFound:
+        # Alguno de los dos nodos no existe en el grafo.
+        return None
 
 # ==============================================================
 # PROGRAMA PRINCIPAL
