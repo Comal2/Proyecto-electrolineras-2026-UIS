@@ -58,7 +58,7 @@ def pedir_numero_recorridos():
         except ValueError:
             print("Error: ingresa solo números enteros.")
 
-def simular_recorridos():
+def simular_recorridos(G=None): 
  
     # ==============================================================
     #                CARGA DE DATOS
