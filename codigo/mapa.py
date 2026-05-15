@@ -9,12 +9,19 @@ from folium.plugins import HeatMap
 DIRECTORIO = os.path.dirname(os.path.abspath(__file__)) #guarda la ubicacion del mapa.py
 #guardamos las ubicaciones de los archivos csv
 
-df_e = pd.read_csv(os.path.join(DIRECTORIO, "../datos/electrolineras_con_nodos.csv"))
-df_p = pd.read_csv(os.path.join(DIRECTORIO, "../datos/puntos_con_nodos.csv"))
 #definimos las rutas de los csv
 
 def generar_mapa_con_demanda():
     """Genera el mapa base con electrolineras, puntos y zonas de demanda."""
+    # Carga de CSVs aquí: si no existen, el resto del programa puede arrancar igual
+    ruta_e = os.path.join(DIRECTORIO, "../datos/electrolineras_con_nodos.csv")
+    ruta_p = os.path.join(DIRECTORIO, "../datos/puntos_con_nodos.csv")
+    if not os.path.exists(ruta_e) or not os.path.exists(ruta_p):
+        print("ERROR: faltan los CSV con nodos. Usa primero la opción 1 del menú (cargar mapa/grafo).")
+        return None
+    df_e = pd.read_csv(ruta_e)
+    df_p = pd.read_csv(ruta_p)
+
     #creacion del mapa
     mapa = folium.Map(location=[7.1254, -73.1198], zoom_start=13)
 
