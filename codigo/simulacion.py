@@ -40,7 +40,7 @@ class Vehiculo:
     def recargar(self):
         self.bateria_actual = 100.0
         self.contador_recargas += 1
-        print(f"🔋 {self.modelo} recargado al 100%")
+        print(f"🔋a {self.modelo} recargado al 100%")
 
         print()
 
