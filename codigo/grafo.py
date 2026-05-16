@@ -38,7 +38,6 @@ DIRECTORIO_PROYECTO = os.path.dirname(DIRECTORIO_SCRIPT)
 # Rutas absolutas a cada archivo de datos.
 RUTA_GRAPHML        = os.path.join(DIRECTORIO_PROYECTO, "datos", "area_metropolitana.graphml")
 RUTA_ELECTROLINERAS = os.path.join(DIRECTORIO_PROYECTO, "datos", "electrolineras.csv")
-RUTA_ESTADISTICAS   = os.path.join(DIRECTORIO_PROYECTO, "datos", "estadisticas.xlsx")
 RUTA_PUNTOS         = os.path.join(DIRECTORIO_PROYECTO, "datos", "puntos_referencia.csv")
 RUTA_ELECTROLINERAS_NODOS = os.path.join(DIRECTORIO_PROYECTO, "datos", "electrolineras_con_nodos.csv")
 RUTA_PUNTOS_NODOS         = os.path.join(DIRECTORIO_PROYECTO, "datos", "puntos_con_nodos.csv")
@@ -156,39 +155,6 @@ def procesar_puntos(G, ruta_csv):
         print(f"Columna faltante en el CSV: {e}")
         return None
 
-
-def procesar_estadisticas(ruta_xlsx):
-    """Lee el archivo Excel de estadísticas y muestra un resumen."""
-    # Esta función está pensada para cuando P2 entregue los datos estadísticos.
-    print(f"\n{'='*50}")
-    print("Procesando Estadísticas...")
-    print(f"   Archivo: {ruta_xlsx}")
-    print(f"{'='*50}")
-
-    try:
-        # sheet_name=None -> lee todas las hojas del Excel a la vez.
-        # El resultado 'hojas' es un diccionario { "Hoja1": df, "Hoja2": df, ... }
-        hojas = pd.read_excel(ruta_xlsx, sheet_name=None, engine='openpyxl')
-
-        print(f"   Hojas encontradas: {list(hojas.keys())}")
-
-        # Recorremos cada hoja y mostramos un resumen rápido.
-        for nombre_hoja, df_hoja in hojas.items():
-            print(f"\n--- Hoja: '{nombre_hoja}' ({len(df_hoja)} filas x {len(df_hoja.columns)} columnas) ---")
-            # head(5) muestra solo las primeras 5 filas, para no saturar la consola.
-            print(df_hoja.head(5).to_string(index=False))
-
-        return hojas
-
-    except FileNotFoundError:
-        print(f"Archivo no encontrado: {ruta_xlsx}")
-        return None
-    except Exception as e:
-        print(f"Error al leer el Excel: {e}")
-        print("   Asegúrate de tener instalado: pip install openpyxl")
-        return None
-
-
 def electrolinera_mas_cercana(grafo, nodo_origen):
     """Devuelve la electrolinera más cercana por carretera al nodo dado.
 
@@ -256,24 +222,6 @@ def electrolinera_mas_cercana(grafo, nodo_origen):
     print(f"   Distancia  : {mejor['distancia_m']:.1f} m")
     return mejor
 
-def distancia_entre_nodos(grafo, nodo_a, nodo_b):
-    """Devuelve la distancia en metros por carretera entre dos nodos del grafo.
-    
-    Usa Dijkstra (weight='length') igual que electrolinera_mas_cercana().
-    Retorna float con los metros, o None si no hay ruta entre los nodos.
-    """
-    try:
-        # shortest_path_length calcula la suma de los 'length' de cada calle
-        # en el camino más corto de nodo_a a nodo_b (Dijkstra internamente).
-        return nx.shortest_path_length(grafo, nodo_a, nodo_b, weight='length')
-    
-    except nx.NetworkXNoPath:
-        # No existe ningún camino entre los dos nodos (zonas desconectadas).
-        return None
-    
-    except nx.NodeNotFound:
-        # Alguno de los dos nodos no existe en el grafo.
-        return None
 
 # ==============================================================
 # PROGRAMA PRINCIPAL
@@ -299,10 +247,6 @@ if __name__ == "__main__":
 
         # 3. Procesar puntos de referencia y mapearlos al grafo.
         df_puntos = procesar_puntos(grafo_area, RUTA_PUNTOS)
-
-        # 4. Procesar el archivo Excel de estadísticas.
-        # Está comentado. P2 termina de generar el archivo.
-        # datos_estadisticas = procesar_estadisticas(RUTA_ESTADISTICAS)
 
         # 5. Guardar resultados en CSV (con la columna nodo_mapa ya añadida).
         # index=False evita guardar la columna extra del índice de pandas.
