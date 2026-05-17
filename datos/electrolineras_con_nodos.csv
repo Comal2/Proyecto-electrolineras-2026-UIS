@@ -1,9 +1,0 @@
-id,nombre,latitud,longitud,tipo_carga,potencia_kw,zona,nodo_mapa
-E1,Homecenter,7.1166407,-73.120127,alta_potencia,150,Centro-Bga,1067172269
-E2,CC Quinta Etapa,7.115420640034982,-73.10766131582209,normal,50,Cabecera,2746158992
-E3,CC Cacique,7.09929060866683,-73.10713409909908,alta_potencia,150,Cabecera,9363638439
-E4,CC Canaveral,7.0708246569704745,-73.10626505872307,alta_potencia,150,Floridablanca-Centro,13382562257
-E5,EDS Terpel Piedecuesta,6.9980135,-73.0521321,alta_potencia,150,Piedecuesta,1848736124
-E6,Éxito de la Rosita,7.113356086941692,-73.12313842061032,normal,50,Centro-Bga,286739945
-E7,CC la Florida,7.069603582131851,-73.10528766987646,normal,50,Floridablanca-Centro,2757171362
-E8,Promotores del Oriente,7.085365674999598,-73.16469082573603,alta_potencia,150,Girón,1141283800
