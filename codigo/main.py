@@ -112,10 +112,7 @@ while True:
                         print(f"Precisión de prueba: {metrics['accuracy']:.2f}")
                         print(metrics['report'])
 
-                        ejemplos = [
-                            {"vehiculo": "Nissan LEAF Standard Range 52 kWh", "bateria_al_recargar": 25, "numero_recorrido": 5},
-                            {"vehiculo": "BMW i4 eDrive40", "bateria_al_recargar": 10, "numero_recorrido": 8},
-                        ]
+                        ejemplos = df[["vehiculo", "bateria_al_recargar", "numero_recorrido"]].to_dict(orient="records")
                         resultados = predecir_ubicaciones(modelo, encoder, scaler, features, ejemplos)
 
                         if resultados:
