@@ -64,10 +64,10 @@ def generar_mapa_con_demanda():
                     for _, fila in elec.iterrows():
                         # Círculo de demanda
                         demanda_pct = zona['demanda']
-                        if demanda_pct > 0.5:
+                        if demanda_pct > 0.20:
                             color = 'red'
                             radius = 800
-                        elif demanda_pct > 0.3:
+                        elif demanda_pct > 0.10:
                             color = 'orange'
                             radius = 600
                         else:
