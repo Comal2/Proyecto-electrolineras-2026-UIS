@@ -4,3 +4,10 @@ __pycache__/
 
 # Excel temporales
 ~$*
+
+datos/*.graphml
+datos/*_con_nodos.csv
+datos/estadisticas.*
+datos/predicciones_demanda.json
+resultados/*.html
+resultados/*.png
