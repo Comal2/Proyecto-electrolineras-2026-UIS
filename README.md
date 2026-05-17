@@ -159,6 +159,6 @@ Opción 2
 
 > **Seguimiento del proyecto**  
 > El plan de trabajo, distribución de roles y cronograma ejecutado durante el desarrollo del proyecto puede consultarse en el siguiente documento:  
-> 👉 **[Ver cronograma de trabajo](CRONOGRAMAS__INSTRUCCIONES/CRONOGRAMA.md)**
+> 👉 **[Ver cronograma de trabajo](CRONOGRAMAS_&&_INSTRUCCIONES\CRONOGRAMA.md)**
 
 ---
