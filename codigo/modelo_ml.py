@@ -47,7 +47,13 @@ def entrenar_modelo(df):
 
     y_pred = modelo.predict(X_test)
     accuracy = accuracy_score(y_test, y_pred)
-    report = classification_report(y_test, y_pred, target_names=encoder.classes_, output_dict=True)
+    report = classification_report(
+    y_test, y_pred,
+    labels=list(range(len(encoder.classes_))),
+    target_names=encoder.classes_,
+    output_dict=True,
+    zero_division=0
+)
 
     return modelo, encoder, scaler, {"accuracy": accuracy, "report": report}, X.columns.tolist()
 
